@@ -1,0 +1,34 @@
+# 2020-07-21
+## Informational links
+- https://www.cplusplus.com/info/description/
+    - Good overview of language types, nothing new for me =/
+- https://www.cplusplus.com/info/history/
+    - Skimmed, nice history on C++
+- https://www.cplusplus.com/info/faq/
+    - Good clarifications on a few things
+    - Including that ANSI-C++ is a standard, whereas iirc there's inconsistencies between compilers so we have to wrangle with defined vs undefined behavior
+
+## Tutorial
+https://www.cplusplus.com/doc/tutorial/introduction/
+
+Assembly...
+
+How compilation works...
+
+Console programs...
+
+Due to being on Linux, we'll use `g++`
+Clang is good for OS X
+
+https://www.cplusplus.com/doc/tutorial/program_structure/
+- Code comments
+- `#` is a directive symbol
+    - `#include` means to insert the code into this file (kind of like PHP `include`)
+        - As opposed to Python and Node.js `import`/`require` which load that part of the program as a module which can be referenced but isn't in the same file per-se
+    - `#include <iostream>` means include the *header* for iostream (still need to fully understand what a header is...)
+- `int main ()` - Declare a function which returns an `int`, is called `main`, and takes 0 parameters
+    - `main` is special as it's what's called when the program is run
+    - Not mentioned: `int` is going to be the exit code of the program
+        - If not specified, then the function will return `0` by default (success exit code)
+- `std::cout` - `std` is standard, `cout` is character output
+- `<<` is insertion operator so we insert the string to `std::cout`
