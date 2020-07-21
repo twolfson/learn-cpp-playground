@@ -38,3 +38,37 @@ Clang is good for OS X
 ### Comments
 - `//` is single line ocmment
 - `/* */` is multiline comment
+
+### Namespaces
+- In some other code, might have seen no `std::` used
+    - This is due to using the `std` namespace by default (see below)
+    - However, `std::cout` and `cout` refer to the same object
+        - `cout` is called unqualified
+        - `std::out` is called qualified, with the namespace `std`
+- `cout` is part of standard C++ library, declared within the `std` namespace
+    - To refer to items within `std` namespace, program shally qualify usage of elements of library (e.g. `std::`) or "introduce visibility of its components"
+        - Visibility is done most often with `using` delcaration
+        - e.g. `using namespace std;`
+
+Future code examples will use similar `using` syntax
+
+Both are valid but only using non-`using` syntax is good to avoid name collisions (seems backwards reinforcement...)
+
+For personal reference, here's the error when we try `cout` without `std::` and no `using namespace`:
+
+```
+main.cpp: In function ‘int main()’:
+main.cpp:7:3: error: ‘cout’ was not declared in this scope
+   cout << "Hello World!\n";
+   ^~~~
+main.cpp:7:3: note: suggested alternative:
+In file included from main.cpp:2:0:
+/usr/include/c++/7/iostream:61:18: note:   ‘std::cout’
+   extern ostream cout;  /// Linked to standard output
+```
+
+Oooh, really cool insight that C++ std lib are just a file locally
+
+```
+less /usr/include/c++/7/iostream
+```
