@@ -1,5 +1,5 @@
 # 2020-07-21
-## Informational links
+# Informational links
 - https://www.cplusplus.com/info/description/
     - Good overview of language types, nothing new for me =/
 - https://www.cplusplus.com/info/history/
@@ -8,8 +8,8 @@
     - Good clarifications on a few things
     - Including that ANSI-C++ is a standard, whereas iirc there's inconsistencies between compilers so we have to wrangle with defined vs undefined behavior
 
-## Tutorial
-https://www.cplusplus.com/doc/tutorial/introduction/
+# Tutorial
+## https://www.cplusplus.com/doc/tutorial/introduction/
 
 Assembly...
 
@@ -20,7 +20,7 @@ Console programs...
 Due to being on Linux, we'll use `g++`
 Clang is good for OS X
 
-https://www.cplusplus.com/doc/tutorial/program_structure/
+## https://www.cplusplus.com/doc/tutorial/program_structure/
 - Code comments
 - `#` is a directive symbol
     - `#include` means to insert the code into this file (kind of like PHP `include`)
@@ -32,3 +32,9 @@ https://www.cplusplus.com/doc/tutorial/program_structure/
         - If not specified, then the function will return `0` by default (success exit code)
 - `std::cout` - `std` is standard, `cout` is character output
 - `<<` is insertion operator so we insert the string to `std::cout`
+
+- Multiple `std::cout` calls continues outputting
+
+### Comments
+- `//` is single line ocmment
+- `/* */` is multiline comment
