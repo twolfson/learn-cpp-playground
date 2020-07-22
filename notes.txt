@@ -158,3 +158,7 @@ Limitations of a given system can be resolved via `numeric_limits` classes insid
 
 > My eyes are glazing over when I see this... `template <class T>` keeps on throwing me/scaring me off =/
 > https://www.cplusplus.com/reference/limits/numeric_limits/
+> Ah, usage is like `std::numeric_limits<int>::min()`
+> Staaarting to click a little
+
+Paused at " If for some reason, types of specific sizes are needed, the library defines certain fixed-size type aliases in header <cstdint>."
