@@ -74,3 +74,87 @@ less /usr/include/c++/7/iostream
 ```
 
 # https://www.cplusplus.com/doc/tutorial/variables/
+- Variables...
+
+- Addition, subtraction, and equals operators (implicit)
+
+
+## Identifiers
+- Valid identifer is a sequence of at least 1 letter, digit, or underscore (no spaces, punctuation, or symbol allows)
+    - Also always starts with a letter or underscore (usually only for compiler-specific keywords, external identifiers, or __ variants)
+
+Here's an example error:
+
+```
+main.cpp: In function ‘int main()’:
+main.cpp:9:7: error: expected unqualified-id before numeric constant
+   int 1foo = 3;
+       ^~~~
+```
+
+- Cannot use reserved keywords, giant list...
+    ```
+    alignas, alignof, and, and_eq, asm, auto, bitand, bitor, bool, break, case, catch, char, char16_t, char32_t, class, compl, const, constexpr, const_cast, continue, decltype, default, delete, do, double, dynamic_cast, else, enum, explicit, export, extern, false, float, for, friend, goto, if, inline, int, long, mutable, namespace, new, noexcept, not, not_eq, nullptr, operator, or, or_eq, private, protected, public, register, reinterpret_cast, return, short, signed, sizeof, static, static_assert, static_cast, struct, switch, template, this, thread_local, throw, true, try, typedef, typeid, typename, union, unsigned, using, virtual, void, volatile, wchar_t, while, xor, xor_eq
+    ```
+    - Some compilers might have more
+
+- C++ is case-sensitive so RESULT !== result !== Result
+
+## Fundamental data types
+- Variable values are stored in memory at an unspecified location as 0s and 1s, don't need to know per-se
+- We do need to know type though as interpretation and memory usage varies widely
+
+- We've got the following types:
+
+- Character types, representing text (e.g. 'A', '$')
+    - `char`, a single character - One byte in size (at least 8 bits)
+    - `char16_t`, "Not smaller than `char`" (at least 16 bits)
+    - `char32_t`, "Not smaller than `char32_t`" (at least 32 bits)
+    - `wchar_t` - *Can* reprepsent largest supported character set
+        > It's annoying how these are all not rigid ("not smaller than", "can")
+        > Really want it to be 16-bit character, 32-bit character, "is" not "can
+        > Ugh...
+- Numerical integer types (e.g. 7. 1024)
+    > `signed`, not well explained but allows for +/- values down to half of range and up to half of range (e.g. 8 bits -> -128 to 127)
+    > `unsigned`, full range from 0 to value (e.g. 8 bits -> 0 to 255)
+    - `char`, at least 8 bits
+    - `short`, at least 16 bits (at least `char`)
+    - `int`, at least 16 bits (at least `short`)
+    - `long int`, at least 32 bits (at least `int`)
+    - `long long int`, at least 64 bits (at least `long`)
+- Numerical floating-point types (e.g. 3.14, 0.01)
+    > Broken down into significand/mantissa bits and exponent bits, kind of like 3.14e+14
+    - `float`, no mention of bits
+    - `double`, precision not less than `float`
+    - `long double`, precision not less than `double`
+- Boolean type (e.g. `true`, false`)
+    - `bool`, 1 bit
+- Void type
+    - `void`, 0 bits (no storage)
+- Null pointer
+    - `decltype(nullptr)` (no info)
+    > I'm guessing pointers are their own type which get size assigned by the OS?
+
+Words `signed` and `int` can be omitted (except for in `char` case)
+e.g. `signed short int` can be `signed short`, `short int`, or `short`
+
+**None of the fundamental types have a standard size specified except `char`, only a minimum size at most**
+This is due to different compilers and machines doing different things
+
+"This allows for flexibility to work optimally in all kinds of platforms, both present and future"
+> Hahaha... good joke there... so much broken code... so much -_-;;;
+
+8-bit = 2^8 = 256 represnetable values
+16-bit = 65,536
+32-bit = 4,294,967,296 (~4 billion)
+64-bit = 18,446,744,073,709,551,616 (~18 billion billion)
+
+Clarification on signed vs unsigned: 655356 -> 0 to 65535 (unsigned), -32768 to 32767 (signed)
+Yep, so I was right =D
+
+Clarification on floating points, terms are called significant and exponent (mostly right before)
+
+Limitations of a given system can be resolved via `numeric_limits` classes inside of `limits` header
+
+> My eyes are glazing over when I see this... `template <class T>` keeps on throwing me/scaring me off =/
+> https://www.cplusplus.com/reference/limits/numeric_limits/
