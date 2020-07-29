@@ -379,3 +379,252 @@ Reading this instead: https://www.cplusplus.com/articles/Gw6AC542/
     - I guess compiler caches results for each of the files?
 - Multiple files is for organization, yep
 - ... Alright, this file is going to get into the weeds and head is still full. Going to come back another time
+
+... and back
+
+- Multiple files allows for separating interface from implementation
+    - So I guess overriding and such?
+
+C++ built in 2 stages:
+- Each file is compiled on its own into intermediate files, called object files (unrelated to objects in code)
+- Then each file is linked together to final binary (program itself)
+
+- Example code showing `.cpp` files aren't shared
+    ```cpp
+    // myclass.cpp
+    class MyClass {
+        // ...
+    }
+    ```
+    ```cpp
+    // main.cpp
+    MyClass a; // Compile error: 'MyClass' is unidentified
+    ```
+- i.e. When we compile each `.cpp` file on its own, it doesn't have anything linking the files so they error out
+    - Ohhh, gotcha
+
+- Here's where header files come in (yay)
+    - They define the interface (i.e. what MyClass receives and such) while leaving the implementation separate (in its own `.cpp` file)
+    - I feel like it's not a great trade-off but alright
+        - Could prob just as easily scrape the `.cpp` file for that info or something
+        - Maybe it was a product of the times when processors and disk storage were a lot slower
+- Updated example:
+    ```cpp
+    // myclass.h
+    class MyClass
+    {
+    public:
+        void foo();
+    }
+
+    // myclass.cpp
+    #include "myclass.h"
+
+    void MyClass::foo()
+    {
+        // Guessing this overrides `foo` placeholder
+        // Curious how C++ distinguishes the files
+    }
+
+    // main.cpp
+    #include "myclass.h"
+
+    MyClass a; // No more error
+    ```
+- `#include` will copy/paste all of the `.h` into the file
+    - I guess dead code will be abstracted away
+
+## Distinction between .h/.cpp/.hpp/.cc/etc
+- Fundamentally all text files but there's conventions
+
+- Header files should use `.h/.hpp/.hxx`
+- C++ source files should use `.cpp/.cxx/.cc`
+- C source files should only use `.c`
+
+We separate C++ from C as it affects some compilers
+Since on a C++ site, prob only writing C++ so avoid the `.c` extension
+
+Also, compilers might try to avoid header extensions
+
+To reiterate from before:
+- Header files are loaded via `#include` and not compiled
+- Source files are not loaded via `#include` and are compiled
+
+There are rare exceptions to the rule, your scenario prob doesn't count (only one listed is about templates which already sounds sketchy)
+so yea... don't
+
+## Include guards
+- C++ compilers will complain if include is used twice
+    ```cpp
+    # include "myclass.h"
+    # include "myclass.h" // Compiler error - MyClass already defined
+    ```
+
+- This can be frustrating if we include a file twice in multiple dependencies
+    e.g. `a.h` imports `x.h`, `b.h` imports `x.h`, and `main.cpp` imports `a.h` and `b.h`
+- Because of this, people are often told to avoid `#include` in header files which is bad advice
+    - Sometimes instructed to do so, you can grudgingly do it but shake it once leaving the class
+- Can do `#include` in header files but take precautions:
+    - Only include what is needed
+    - Guard against multiple includes:
+        - Example:
+        ```cpp
+        // x.h
+        #ifndef __X_H_INCLUDED__ // if x.h hasn't been included yet (if not defined)
+        #define __X_H_INCLUDED__ //   #define this so the compiled knows it has been included
+
+        class X { };
+        #endif
+        ```
+        - Note: Because this logic is going in `x.h`, then it will always work -- nothing to put inside of `a.h` or `b.h`
+        - I'm a little curious if we get global namespace pollution issues but I guess that comes later
+        - Obviously no need to guard `.cpp` files like this since they aren't loaded via `#include`
+        - DONE: I'm curious what built-ins do, do they do a similar setup?
+            Oooh, they do =o
+            > Via /usr/include/c++/7/string
+            ```cpp
+            #ifndef _GLIBCXX_STRING
+            #define _GLIBCXX_STRING 1
+            ```
+            > Comical that `<string>` now mostly uses `<bits/*>` libraries
+
+## Right way to include
+Two kind of dependencies:
+- Forward declared
+- `#include`
+
+Example: Class A uses Class B (thus A depends on B)
+
+If A makes no reference to B, then do nothing
+If A only refers to B in friend declaration, then do nothing
+
+If A containers a B pointer or reference (e.g. B* myb), then use forward declaration
+If one or more functions has a B obj/ptr/ref/etc, then use forward declaration
+
+If B is a parent class of A, then use `#include`
+If A contains a B object, then use `#include`
+
+Full example:
+```
+// include guard
+#ifndef __MYCLASS_H_INCLUDED__
+#define __MYCLASS_H_INCLUDED__
+
+// Forward declared dependencies
+class Foo;
+class Bar;
+
+// included dependencies
+#include <vector>
+#include "parent.h"
+
+// class itself
+class MyClass : public Parent # Use as `Parent` so `#include "parent.h"`
+{
+public:
+    std::vector<int> avector; // Uses vector as an object to `#include <vector>`
+    Foo* foo; // Foo pointer, so forward declare Foo (I guess this is when we define the name of it only and allow others to fill in the rest?)
+    void Func(Bar& bar); // Bar reference, so forward declare Bar
+
+    friend class MyFriend; // friend declaration, not a dependency so nothing needed
+}
+
+#endif // __MYCLASS_H_INCLUDED__ (end of guard)
+```
+
+- Avoid unnecessary `#include` as it can lead to trouble
+
+## Why was that the "right way"?
+- Careless usage of `#include` can lead to trouble
+    - One way to avoid it is abstinence but that leads to lots of work and headaches
+- This methodology focuses on encapsulation and no other file needs to know internals of `.h` file
+    - Alternative would mean loading all of `.h` dependencies in program, including its nested ones which is a paiiin
+
+## Circular dependencies
+> Usually this means misstructuring of code in my experience =/
+> A parent with 2 children dependency or 2 parents with 1 child instead of 2 siblings with more code somewhere
+
+But they say...
+If we only need a forward declaration at some point, then circle is broken and it works
+
+```cpp
+// a.h
+#include "b.h"
+
+class A { B* b; };
+
+// b.h
+#include "a.h"
+
+class B { A* a; };
+// Still getting used to `;` on braces
+```
+
+This will result in infinite inclusion loop =/
+but due to guarding, we stop recursing an error out
+
+```cpp
+#include "a.h"
+    #include "b.h"
+        #include "a.h"
+            // Hit guard
+
+    class B { A* a;} // Error: A is undeclared
+```
+
+"This is why always forward declare when using pointer or reference"
+So we should be avoiding the circular `#include` altogether
+
+If we use an object though (e.g. `B b;`, not `B* b;`), then need to do `#include`
+
+... Impossible so just use a pointer or reference rather than full object
+> Or y'know, break up the code...
+
+## Function inlining
+Function body needs to exist in every `.cpp` file which calls them, otherwise there are linker errors
+> I'm a little curious how compiler knows which `.cpp` files to load and when but maybe that's just what's passed in or it sees the `.h` files
+
+```cpp
+class B
+{
+public:
+    void Func(const A& a) // parameter so fwd declare is okay
+    {
+        a.DoSomething(); // a is dereferenced now so need an `include`, thus we have circular inclusion
+    }
+};
+```
+
+While inline function needs to exist in header, doesn't need to be in class definition, so can exploit via:
+
+```
+// b.h
+class A; // fwd declared dependency
+
+class B
+{
+public:
+    void Func(const A& a); // Fwd declared A used, good
+};
+
+// Load a.h properly via `include`
+#include "a.h"
+
+inline void B::Func(const A& a)
+{
+    a.DoSomething(); // Works dude to `include
+}
+```
+
+Wow, that's one clever hack. It breaks the circular dependency since it makes progress
+
+- Function bodies at bottom header is ugly though, can we avoid it?
+    - Yes, move bodies to another header (e.g. `b_inline.h`)
+    - Hahaha, I guess that works
+
+## Forward declaring templates
+This is getting into a world which I'm very unfamiliar with and my eyes have glazed over
+
+Going to call it as good enough for now and we can always come back
+
+Calling it for the night here
