@@ -369,3 +369,13 @@ In file included from /usr/include/c++/7/iostream:39:0,
     bool bar = false;
     int* p = nullptr;
     ```
+
+Head is feeling kind of full, stopping at "typed constant expressions" on https://www.cplusplus.com/doc/tutorial/constants/
+
+Attempted to look ahead for header explainer, shocked to not see any
+Reading this instead: https://www.cplusplus.com/articles/Gw6AC542/
+
+- Multiple files speeds up compile time
+    - I guess compiler caches results for each of the files?
+- Multiple files is for organization, yep
+- ... Alright, this file is going to get into the weeds and head is still full. Going to come back another time
