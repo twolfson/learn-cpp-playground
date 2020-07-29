@@ -189,3 +189,16 @@ Resuming tutorial now...
 - `void` means it lacks a type
 - `nullptr` is a special kind of pointer, not an arithmetic type
 - Other types are known as compound data types
+
+## Declaration of variables
+- C++ strongly typed... requires declaration before use...
+    - Useful for compiler...
+
+```cpp
+int a;
+float mynumber;
+```
+
+- Scope of these declarations are allowed in the entirety of the rest of the program
+- Can use commas for combined declaration (my experience in JS has taught me split line is better since usually declaration and initialization should go hand-in-hand)
+    - `int a, b, c;`
