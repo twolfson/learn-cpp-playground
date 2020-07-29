@@ -161,4 +161,31 @@ Limitations of a given system can be resolved via `numeric_limits` classes insid
 > Ah, usage is like `std::numeric_limits<int>::min()`
 > Staaarting to click a little
 
-Paused at " If for some reason, types of specific sizes are needed, the library defines certain fixed-size type aliases in header <cstdint>."
+Paused at "If for some reason, types of specific sizes are needed, the library defines certain fixed-size type aliases in header <cstdint>."
+
+# 2020-07-28
+Aaaand we're back
+
+https://www.cplusplus.com/reference/limits/numeric_limits/
+
+```cpp
+template <class T> class numeric_limits {
+public:
+  static T min() throw();
+};
+
+// Translates to usage:
+//                   v static public method
+numeric_limits<int>::min();
+// ^ class,    ^ template class
+```
+
+https://www.cplusplus.com/doc/tutorial/variables/
+
+Resuming tutorial now...
+
+- Types (characters, integers, floating-point, and boolean) are known as arithmetic types
+    - Huh, would have expected "primitive"
+- `void` means it lacks a type
+- `nullptr` is a special kind of pointer, not an arithmetic type
+- Other types are known as compound data types
