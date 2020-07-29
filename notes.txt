@@ -202,3 +202,33 @@ float mynumber;
 - Scope of these declarations are allowed in the entirety of the rest of the program
 - Can use commas for combined declaration (my experience in JS has taught me split line is better since usually declaration and initialization should go hand-in-hand)
     - `int a, b, c;`
+
+
+- Code example: 02-variable-declaration
+
+## Initialization of variables
+- When variables declared but not set, their value is undetermined
+    > What happens if we try to work with an undetermined value?
+    > It seems to default to `0` usually but when we subtract, we're getting an underflow and varying between 32764 and 32767
+    ```cpp
+    // Process our variables
+    // a = 5;
+    // b = 2;
+    // a += 1;
+    result = a - b;
+    ```
+- Setting variable is called initalization
+- 3 ways to initialize, whoa!
+    - All valid and come from language evolution
+    - C-like initialization
+        - `type identifier = initial_value;`
+        - e.g. `int x = 0;`
+    - Constructor initialization (not part of C)
+        - `type identifier (initial_value);`
+        - e.g. `int x (0);` // TODO: Try me
+    - Uniform initialization, similar to constructor variant, introduced in 2011:
+        - `type identifier {initial_value};`
+        - e.g. `int x {0};` // TODO: Try me
+> These latter 2 seem strange, I bet they're more applicable to classes (I think C already had structs though so curious...)
+
+- Code example: 03-variable-initialization
