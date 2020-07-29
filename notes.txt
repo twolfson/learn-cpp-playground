@@ -225,10 +225,10 @@ float mynumber;
         - e.g. `int x = 0;`
     - Constructor initialization (not part of C)
         - `type identifier (initial_value);`
-        - e.g. `int x (0);` // TODO: Try me
+        - e.g. `int x (0);`
     - Uniform initialization, similar to constructor variant, introduced in 2011:
         - `type identifier {initial_value};`
-        - e.g. `int x {0};` // TODO: Try me
+        - e.g. `int x {0};`
 > These latter 2 seem strange, I bet they're more applicable to classes (I think C already had structs though so curious...)
 
 - Code example: 03-variable-initialization
@@ -297,3 +297,75 @@ In file included from /usr/include/c++/7/iostream:39:0,
      endl(basic_ostream<_CharT, _Traits>& __os)
      ^~~~
 ```
+
+## Constants
+## Literals
+- Integer literals (e.g. 100, -200)
+    - No quotes, representing base 10 by default
+    - Octal, leading `0`: `0113`
+    - Hexadecimal, leading `0x`: `0x4b`
+    - Default is type `int`, for variation, use following:
+        - u or U for unsigned: 75u
+        - l or L for long: 75l
+        - ll or LL for long long: 75ll
+        - Demo: 75ul, unsigned long
+- Floats, similar base 10 literals: (e.g. 3.14)
+    - Supports exponent form (e.g. 6.02e23, 1.6e-19)
+    - Modify with:
+        - f or F for float: 6.02e23f
+        - l or L for long double: 3.14159L
+- String literals
+    - Single character, use single quotes (e.g. 'z', 'p')
+    - Strings (more than 1 char), use double quotes (e.g. "Hello world")
+    - Special characters use `\` to escape (e.g. \n, \r, \', \\)
+    - Can also use `\x` for hex version (e.g. `\x20`) and `\` with numbes for octal (e.g. `\24`)
+    - Using spaces between string literals will concatenate them
+        ```cpp
+        "this" "is a"
+        "single string"
+        // Same as
+        "thisis asingle string"
+        ```
+    - Using `\` in a string means line continuation which means line continues where it stopped
+        ```cpp
+        x = "string in \
+        two lines"
+        // Same as
+        x = "string in two lines"
+        ```
+        - DONE: Does this work with indents?
+            Indents count
+        ```cpp
+        int main() {
+            x = "string in \
+            two lines"
+            // Same as
+            x = "string in      two lines"
+        }
+        ```
+    - By default, characters in string literal have type `char`. To modify, use:
+        - u for char16_t
+        - U for char32_t (note case sensitivity)
+        - L for wchar_t
+        - Attempted to use in example but getting conversion error =/
+            ```
+            main.cpp:8:26: error: conversion from ‘const char16_t [13]’ to non-scalar type ‘std::__cxx11::string {aka std::__cxx11::basic_string<char>}’ requested
+               std::string mystring = u"Hello World!";
+            ```
+    - Also have:
+        - u8 for UTF-8 encoding (guess default is ASCII)
+        - R is raw string (meaning all characters are taken as is, no escaping)
+            - Usage: R"{sequence}contents{sequence}"
+            ```cpp
+            R"(string with \backslash)"
+            R"&%$(string with \backslash)&%$"
+            // Both equivalent to
+            "string with a \\backslash"
+- More literals:
+    - Boolean: true/false
+    - `nullptr` is null pointer value (unsure what that means, guessing 0?)
+    ```cpp
+    bool foo = true;
+    bool bar = false;
+    int* p = nullptr;
+    ```
