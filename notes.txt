@@ -232,3 +232,68 @@ float mynumber;
 > These latter 2 seem strange, I bet they're more applicable to classes (I think C already had structs though so curious...)
 
 - Code example: 03-variable-initialization
+
+# Type deduction
+- Compiler can automatically deduce type based on previous declarations
+    - I've heard frustrating stories of libraries being inundated with `auto` and causing headaches =/
+    ```cpp
+    int foo = 0;
+    auto bar = foo; // Uses `int bar`, based on `foo`
+    ```
+- If a variable only declared, not initialized, then they can use `decltype` for same effect:
+    ```cpp
+    int foo = 0;
+    decltype(foo) bar;
+    ```
+
+- Warnings about intended for inability of not knowing type (e.g. library) or if it improves code readability, examples above decreased readability
+
+## Introduction to strings
+- Strings are a compound type, loaded via the `<string>` header
+    ```cpp
+    #include <string>
+    // ...
+    string mystring = "This is a string";
+    ```
+- Use same 3 initialization calls for demo purposes
+- `endl` will print newline character (guessing this varies based on OS, e.g. Windows is `\r\n`, Linux is `\n` only)
+
+- Lots of different constructor methods, https://www.cplusplus.com/reference/string/string/string/
+    - Pretty sure we're just starting with the "from c-string" variant
+
+- Code example 04-strings
+
+- So many error messages when we forego `using namespace std;` o_o
+
+```
+main.cpp: In function ‘int main()’:
+main.cpp:8:3: error: ‘string’ was not declared in this scope
+   string mystring = "Hello World!";
+   ^~~~~~
+main.cpp:8:3: note: suggested alternatives:
+In file included from /usr/include/c++/7/iosfwd:39:0,
+                 from /usr/include/c++/7/ios:38,
+                 from /usr/include/c++/7/ostream:38,
+                 from /usr/include/c++/7/iostream:39,
+                 from main.cpp:2:
+/usr/include/c++/7/bits/stringfwd.h:74:33: note:   ‘std::__cxx11::string’
+   typedef basic_string<char>    string;
+                                 ^~~~~~
+/usr/include/c++/7/bits/stringfwd.h:74:33: note:   ‘std::__cxx11::string’
+main.cpp:11:16: error: ‘mystring’ was not declared in this scope
+   std::cout << mystring << endl;
+                ^~~~~~~~
+main.cpp:11:16: note: suggested alternative: ‘stdin’
+   std::cout << mystring << endl;
+                ^~~~~~~~
+                stdin
+main.cpp:11:28: error: ‘endl’ was not declared in this scope
+   std::cout << mystring << endl;
+                            ^~~~
+main.cpp:11:28: note: suggested alternative:
+In file included from /usr/include/c++/7/iostream:39:0,
+                 from main.cpp:2:
+/usr/include/c++/7/ostream:590:5: note:   ‘std::endl’
+     endl(basic_ostream<_CharT, _Traits>& __os)
+     ^~~~
+```
