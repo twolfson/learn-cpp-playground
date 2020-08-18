@@ -667,3 +667,81 @@ Resuming at "typed constant expressions" on https://www.cplusplus.com/doc/tutori
             ```
     - `#define` don't require semicolons since preprocessor directives
         - (and semicolon would be considered part of the line)
+
+## Operators
+https://www.cplusplus.com/doc/tutorial/operators/
+
+- Assignment operator, `=`, assigns value to variable
+    - e.g. `x = 5;`, `x = y;`
+    - Operation takes place from right to left, this way we can retain value of `x` until it's ovewritten
+    - Parentheses for prioritized evaluation (called an expression itself)
+    - Can also assign multiple values in 1 shot
+        - e.g. `x = y = z = 5;`
+- Arithmetic operations, +, -, *, /, %
+    - Same as in other C-based languages
+- Compound assigmment
+    - Arithmetic ones: +=, -=, *=, /=, %=
+        - Same as other languages
+    - Bitwise ones: >>=, <<=, &=, ^=, |=
+        - Oddly bitwise not covered yet but same as other languages
+- Increment and decrement: ++, --
+    - Pre-fix and post-fix like other languages (`++x` vs `x++`)
+    - Originally `++x`, `x+=1`, and `x=x+1` might have generated different code but nowadays same result
+- Relational and comparison operators: `==`, `!=`, `>`, `<`, `>=`, `<=`
+    - Same as other languages
+    - Warning about `=` accidentally working
+    - Seem to get errors when comparing mismatched types
+        ```
+        main.cpp: In function ‘int main()’:
+        main.cpp:10:15: error: invalid operands of types ‘double’ and ‘const char [4]’ to binary ‘operator>’
+           cout << (PI > "foo") << endl;
+        ```
+- Logical operators: !, &&, ||
+    - Boolean logic like other languages
+    - Short-circuits as expected
+- Ternary operator: ?
+    - `condition ? result1 : return2`
+    - Same as others
+- Comma operator: ,
+    - Same as JS but I prefer to avoid it
+    - Separates 2 or more expressions where only 1 is expected
+        - e.g. `a = (b=3, b+2);`
+        - Sets `b` to 3 and yields `b+2` so `a = 5` is result
+- Bitwise operators: &, |, ^, ~, <<, >>
+    - Same as other languages
+    - Neat mention of Assembly equivalents: AND, OR, XOR, NOT, SHL, SHR respectively
+
+- Explicit type casting operator
+    - C way to convert: Parens on new type before expression (variable in this case)
+        ```cpp
+        int i;
+        float f = 3.14;
+        i = (int) f; // Truncated to 3
+        ```
+    - C++ way: Functional notation preceeding expression to be converted with expression in parens
+        ```cpp
+        i = int (f); // Curious why not `int(f)` (i.e. have space)
+        ```
+    - Both are valid
+- sizeof
+    - Accepts one parameter, either type or variable
+    - Returns size in bytes of type/object
+    - `x = sizeof (char);`, `x = 1` since `char` is 1 byte large
+    - Determined at compile-time (thanks compiled languages)
+- Other operators
+    - They're skipping pointers and OOP operators for now
+- Operator precedence, long annoying list
+    - Make code obvious, don't rely on this list
+    - Operators in this list not called out explicitly before
+        - ::, scope qualifier
+        - [], subscript
+        - . ->, member access
+        - & *, reference/deference
+        - new delete, allocation/deallocation
+        - .* ->*, access pointer
+    - From personal knowledge:
+        - We did cover `::` from namespace perspective, prob the same
+        - `[]` is for arrays but those operator with data structure size and pointer arithmetic
+        - Curious about `.` and `->`, those might be same as instance attributes in other languages but not sure
+        - `&`, `*` (and usage on `.` and `->`) are pointer specific but still fuzzy on
+        - `new` and `delete` are prob manual GC for class instances
