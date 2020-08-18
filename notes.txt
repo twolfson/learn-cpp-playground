@@ -628,3 +628,20 @@ This is getting into a world which I'm very unfamiliar with and my eyes have gla
 Going to call it as good enough for now and we can always come back
 
 Calling it for the night here
+
+# 2020-08-18
+Resuming at "typed constant expressions" on https://www.cplusplus.com/doc/tutorial/constants/
+
+- Using `const` before type declaration seems to make it a constant variable...
+    ```cpp
+    const double pi = 3.14159;
+    const char tab = '\t';
+    ```
+- Curious what happens when we try to update it, they don't cover this but yea...
+    - `05-const`, yep confirms expected
+        ```cpp
+        main.cpp: In function ‘int main()’:
+        main.cpp:14:8: error: assignment of read-only variable ‘pi’
+           pi = 3.14;
+                ^~~~
+        ```
