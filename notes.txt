@@ -639,9 +639,31 @@ Resuming at "typed constant expressions" on https://www.cplusplus.com/doc/tutori
     ```
 - Curious what happens when we try to update it, they don't cover this but yea...
     - `05-const`, yep confirms expected
-        ```cpp
+        ```
         main.cpp: In function ‘int main()’:
         main.cpp:14:8: error: assignment of read-only variable ‘pi’
            pi = 3.14;
                 ^~~~
         ```
+
+- Can also use `#define` via preprocessor which I believe does something different
+    ```cpp
+    # define PI 3.14159
+    // ...
+    cout << PI;
+    ```
+    - This behaves a replacement so overriding makes less sense
+    - Unless... what happens when we override a `#DEFINE`?
+        - Exploring in `06-define`
+            - It outputs a warning
+            ```
+            main.cpp:6:0: warning: "PI" redefined
+             #define PI 3
+
+            main.cpp:5:0: note: this is the location of the previous definition
+             #define PI 3.14159
+
+            3
+            ```
+    - `#define` don't require semicolons since preprocessor directives
+        - (and semicolon would be considered part of the line)
