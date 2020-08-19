@@ -840,3 +840,41 @@ https://www.cplusplus.com/doc/tutorial/basic_io/
 
 Out of time at the moment
 Pausing at the start of https://www.cplusplus.com/doc/tutorial/control/
+
+...
+
+And back, trying to sneak in another section tonight
+
+## Statements and flow control
+https://www.cplusplus.com/doc/tutorial/control/
+
+- Statements broken up by `;`
+- Curly braces define a block
+
+- If/else if/else syntax, braces optional for 1 liner
+    - Corresponds to statement (optional case) or block
+    > Be a good person, always brace
+
+- While loops...
+    - Use `sleep_for` to count down
+- Do-while loops...
+- For loops...
+    - Sections in parens can be left empty, use comma for chaining inside an expression
+- All same format as JS (almost like JS is inspired by C...)
+
+- Range-based for loop
+    - `for ( declaration : range ) statement;`
+    - Loops over elements in a range (i.e. sequence of elements; e.g. arrays, containers, types with `begin`/`end` functions)
+    - Example: `for (char c : mystr) { /* c is character in mystr */ }`
+    - Can use `auto` instead of explicit type if desired
+
+- `break` and `continue` in loop
+
+- Labels and `goto`
+    - Label defined by `{name}:` (dedented in their syntax)
+    - `goto` will jump to given label (e.g. `goto mylabel;`)
+    - Ignores nesting levels an doesn't unwind stack (scary)
+
+- `switch` with same pass-through/break syntax
+    - No mention of type but I guess coercing to a string like in JS isn't an issue since the expression has a known type always
+    - Limited by not being able to compare to non-constant expressions
