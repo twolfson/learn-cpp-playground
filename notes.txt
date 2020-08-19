@@ -768,3 +768,42 @@ https://www.cplusplus.com/doc/tutorial/basic_io/
         $ ./07-clog/build-and-run.sh 1> /dev/null
         Hello
         ```
+        - Though they can be redirected in the program as well, https://stackoverflow.com/a/52365
+        - Just defaults to `stderr`
+
+- Standard output (cout)
+    - By default this is the screen
+- Output via `<<` (insertion operator)
+    - Works with strings, numbers, and variables
+    ```cpp
+    cout << "Hello World";
+    cout << 123;
+    cout << foo;
+    ```
+- Can chain multiple `<<`
+    - `cout << "Hello " << "World";`
+    - as well as variable (e.g. `cout << "Hello " << name;`)
+
+- Using `<< endl` will flush streams buffer, meaning it's written to the device
+    - `cout` (generally) isn't buffered so this is fine
+    - However `clog` is buffered so it will only log once flushed
+- We can avoid flushing by providing `\n` instead of `endl`
+    > Well that's annoying for cross-platform compatibility...
+
+- Standard input (cin)
+    - By default this is the keyboard
+- Input via `>>` (extraction operator)
+    ```cpp
+    // Declare out variable
+    int foo;
+
+    // Then receive input onto it
+    cin >> foo;
+    ```
+    - It does coercion from character to number for us, how nice =)
+- Characters are only processed by `cin` once Enter/Return is pressed
+- If user input doesn't align to the specified type, then the program continues without setting a value for `i` (which can yield undetermined results)
+    - Most programs should check value was invalid/not, will cover later apparently
+- Can chain multiple `>>`
+    - `cin >> a >> b;`
+    - equivalnet to `cin >> a; cin >> b;`
