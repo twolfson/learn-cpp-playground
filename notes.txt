@@ -949,3 +949,32 @@ https://www.cplusplus.com/doc/tutorial/functions/
 
 My eyes are glazing over so going to call it here
 "inline functions" in https://www.cplusplus.com/doc/tutorial/functions/ is where I'll stop for tonight
+
+# 2020-08-19
+- Inline functions, uses `inline` keyword before type
+    - e.g. `inline string add (int a, int b)`
+- Recommends compiler inlines the function logic rather than use call stack and jumping
+- Note: Compilers might already inline functions, even without this recommendation, for efficiency. This is more of a recommendation/preference to the compiler
+
+- Default values in parameters
+- Use `={value}` after parameter name for a default value
+    - e.g. `int divide(int a, int b=2)`
+- Allows `b` to be optional in invocation (e.g. `divide(12)` not `divide(12, 2)`)
+- I'm curious how this handles strings and `&`
+    - In JS and Python, default parameters are mutable to lists/arrays can be mutated across calls which is an anti-pattern
+    - Exploring in `10-default-values`
+    - TIL We can't use `&` with string literals
+        - `string output = concat("foo", "bar");`
+    - We get a complaint for `&` with default values similarly
+        ```cpp
+        string concat(string& a, string& b="hi") {
+        ```
+        ```
+        main.cpp:5:40: error: cannot bind non-const lvalue reference of type ‘std::__cxx11::string& {aka std::__cxx11::basic_string<char>&}’ to an rvalue of type ‘std::__cxx11::string {aka std::__cxx11::basic_string<char>}’
+         string concat(string& a, string& b="hi") {
+                                                ^
+        In file included from /usr/include/c++/7/string:52:0,
+        ...
+        ```
+    - If we use no `&`, then it works fine
+    - We can also do overloading of functions and it works great too =D
