@@ -878,3 +878,62 @@ https://www.cplusplus.com/doc/tutorial/control/
 - `switch` with same pass-through/break syntax
     - No mention of type but I guess coercing to a string like in JS isn't an issue since the expression has a known type always
     - Limited by not being able to compare to non-constant expressions
+
+## Functions
+https://www.cplusplus.com/doc/tutorial/functions/
+
+- Function syntax
+    ```cpp
+    type name ( param1, param2, ... ) { statements }
+    ```
+    - `type` - Return type
+    - `name` - Function name
+    - `paramX` - Parameter in format of `type parameterName`
+    - `statements` - Function contents
+    - Example:
+    ```cpp
+    int add (int a, int b) {
+        return a+b;
+    }
+    ```
+- `int main` is required and automatically called by compiler
+- All other functions must be called from `main`
+
+- Upon traversing into a function, primitive values are copied into the parameter variables
+- No mention of pass-by-value vs pass-by-reference (I believe this might be a pointer thing, I guess we'll cover it later)
+
+- Functions with no type (i.e. `void`)
+- `void` allows skipping return
+- It looks like `int main` can also skip `return` which implies `return 0;`
+- Parentheses are required to invoke a function, otherwise it's treated as a declaration or statement
+    - `printmsg();` vs `printmsg;`
+
+- `return` value of `main`
+    - If `return` is omitted, then compiler assumes `return 0;`
+    - This only applies to `main` for historical reasons, all other functions need to `return`
+        > Prob also for the best, makes code more obvious
+- Main returns exit code (though not saying that outright)
+- `0` means success, `EXIT_SUCCESS` (from `cstdlib`) is same
+- `EXIT_FAILURE` is in `cstdlib`
+    - On my machine, this is just 1 (used as `return EXIT_FAILURE;`)
+
+- Arguments passed by value and by reference
+    - By default, passing by value which means modifications inside function are isolated to function
+    ```cpp
+    void increase (int a) {
+        a *= 2;
+    }
+    ```
+    - Any calls to `increase` doesn't adjust `a`
+- If we use `&` to reference the same variable, then it can be mutated directly
+    ```cpp
+    void increase (int& a) {
+        a *= 2;
+    }
+    ```
+    - Any calls do modify `a` outside of its scope
+    - That's pretty damn powerful o_o
+    - In JS, we only get that on arrays and objects. Same with Python (lists/dicts)
+    - Going to play with this for amazement
+    - And curious how passing a string goes by value...
+    - And curious if people prefer to avoid this due to mutating inputs usually being frowned upon, but maybe good for memory saving when just want to read
