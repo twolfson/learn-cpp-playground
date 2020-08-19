@@ -978,3 +978,33 @@ My eyes are glazing over so going to call it here
         ```
     - If we use no `&`, then it works fine
     - We can also do overloading of functions and it works great too =D
+
+- Functions cannot called before they are declared
+    - This is why `main` is always written last
+    - Huh, interesting... I guess it's true that I'd expect the overload functionality we wrote to work in either order
+- Prototype of a funciton can be declared without defining it (only stating types, no names required)
+    ```cpp
+    // Prototype declaration
+    void echo (int x);
+
+    // Definitions and invocations
+    int main () {
+        odd(1);
+    }
+    void echo (int x) {
+        cout << x;
+    }
+    ```
+- It's not that efficient but it works
+
+- Recursivity... yep
+- Mention of stack overflow but I wonder if there's a stack limit like in JS and Python (1500 iirc)
+    - It stops after OS-specific stack limit (e.g. 8MB), https://stackoverflow.com/a/2630091
+    - Explored in `11-infinite-recursion`
+    ```
+    1
+    ...
+    261795
+    ./11-infinite-recursion/build-and-run.sh: line 13: 10988 Segmentation fault      (core dumped) ./main.out
+    ```
+    - Result is similar for `&` reference variant
