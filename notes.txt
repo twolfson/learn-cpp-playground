@@ -745,3 +745,26 @@ https://www.cplusplus.com/doc/tutorial/operators/
         - Curious about `.` and `->`, those might be same as instance attributes in other languages but not sure
         - `&`, `*` (and usage on `.` and `->`) are pointer specific but still fuzzy on
         - `new` and `delete` are prob manual GC for class instances
+
+## Basic Input/Output
+https://www.cplusplus.com/doc/tutorial/basic_io/
+- C++ uses abstraction called `streams` for input and output in sequential media (e.g. screen, keyboard, file)
+- Stream is entity where program can insert or extract characters to/from
+    - No need to know details about media or its internals
+
+- Standard library provides following streams, some common sources and destinations
+    - cin, standard input stream
+    - cout, standard output stream
+    - cerr, standard error (output) stream
+    - clog, standard logging (output) stream
+- Huh, I'e heard of all of these except for `clog`. What file descriptor is that?
+    - 0 is input, 1 is output, 2 is error, is 3 logging in bash/Node.js?
+    - https://www.programiz.com/cpp-programming/library-function/iostream/clog
+    - `clog` outputs to `stderr` but it's buffered and doesn't automatically output
+    - Verifying via `07-clog`
+        - Yep, it goes to `stderr` and using `2>` redirect silences it
+        ```
+        $ ./07-clog/build-and-run.sh 2> /dev/null
+        $ ./07-clog/build-and-run.sh 1> /dev/null
+        Hello
+        ```
