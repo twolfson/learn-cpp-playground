@@ -937,3 +937,15 @@ https://www.cplusplus.com/doc/tutorial/functions/
     - Going to play with this for amazement
     - And curious how passing a string goes by value...
     - And curious if people prefer to avoid this due to mutating inputs usually being frowned upon, but maybe good for memory saving when just want to read
+
+- Efficiency considerations and `const` references
+- Calling with fundamentals (e.g. `int`) is relatively inexpensive
+- It can get costly for compound types (e.g. `string`)
+    - e.g. `string concatenate (string a, string b) { return a+b; }`
+    - Pass-by-reference has same result, no mutation, and more efficient memory-wise
+- To avoid contaminating input pass-by-references, use `const` on the qualifying parameters
+    - e.g. `string concatenate (const string& a, const string& b)`
+- Note: For fundamental types, using `&` and `const` may actually be less efficient (usually just equal though)
+
+My eyes are glazing over so going to call it here
+"inline functions" in https://www.cplusplus.com/doc/tutorial/functions/ is where I'll stop for tonight
