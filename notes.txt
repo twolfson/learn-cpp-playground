@@ -807,3 +807,33 @@ https://www.cplusplus.com/doc/tutorial/basic_io/
 - Can chain multiple `>>`
     - `cin >> a >> b;`
     - equivalnet to `cin >> a; cin >> b;`
+
+- `cin` and strings
+- `cin` always considers whitespace (e.g. spaces, tabs, new line) as termination of value
+- Use `getline` instead to get everything possible
+    ```cpp
+    #include <iostream>
+    #include <string>
+    string mystr;
+    getline (cin, mystr);
+    ```
+    > I guess space after function name is how C++ style goes
+    > That makes one of us...
+- Termination is considered at Enter/Return press so it's recommended to always use `getline` over `cin`
+
+- `stringstream`
+- `sstream` header defined `stringstream` type which allows treating string as a stream
+    - Thus allowing treatment like `cin`/`cout`
+    - Most useful for converting strings to numbers and back
+    - They've got an example using `getline()` to a string then coercing that to an integer
+    - I guess we can't use `getline()` directly to an `int`
+    ```cpp
+    string mystr = "1204";
+    int myint;
+    stringstream(mystr) >> myint;
+    ```
+    - Further exploration in `08-stringstream`
+    Yep, lots of complaints when using a number against `getline`
+    but honestly, I'd expect using `cin` to make more sense then...
+    but maybe it's for defense against super long lines?
+    So strange...
