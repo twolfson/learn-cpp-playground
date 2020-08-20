@@ -1072,3 +1072,100 @@ https://www.cplusplus.com/doc/tutorial/functions2/
     - Technically no parameter passing/call stack for the "2". It's just always there
     - I guess this is a trade-off between memory usage and computational complexity, though obviously situation is contrived
     - Also legibility...
+
+## Name visibility
+https://www.cplusplus.com/doc/tutorial/namespaces/
+
+- Scopes, use block scoping
+- Entity at top level has global scope
+- Variables within blocks are local variabbles
+- Cannot double declare name for multiple entities (e.g. `int x; double x;`)
+
+- Inner blocks can override outer block scopes (e.g. `int x; { int x; }`)
+    - Though imo, I'd avoid this for confusion
+- Variables as function parameters or in expressions for blocks (e.g. `for` loops) are local to the scope they're introducing
+
+
+- Namespaces, allow grouping entities that would have global scope into a namespace scope
+    - Syntax:
+    ```cpp
+    namespace identifier {
+        named_entities
+    }
+    ```
+    - Example:
+    ```cpp
+    namespace myNamespace {
+        int a;
+        int val() { return 5; }
+    }
+    // Used as
+    myNamespace::a;
+    myNamespace::val;
+    ```
+- Multiple namespaces can exist in same file in program
+- Not required to specify current namespace within a namespace
+    ```cpp
+    namespace foo {
+        const double pi = 3.14;
+        double tau() { return 2 * pi; }
+    }
+    ```
+- Can split up namespace definitions
+    ```cpp
+    namespace foo { int a; }
+    namespace bar { int b; }
+    namespace foo { int c; }
+    ```
+    - This also applies to multiple files
+
+
+- `using`, declares usage of namespace in a current declarative region (e.g. block)
+    ```cpp
+    # include <iostream>
+    using namespace std;
+
+    namesapce first { int x = 5; }
+    namesapce second { int y = 6; }
+
+    int main () {
+        using first::x;
+        using second::y;
+        cout << x << y;
+    }
+    ```
+- As per example: Can use multiple and also call out specific items being declared via `using` with `::` syntax (I like that a lot)
+    - I feel like there could be a whole convention `using std::cout; // iostream` but that might be overly verbose
+        - Still a bummer that C++ doesn't do import like other languages =/
+    - The `using first` and `using second` don't call out the explicit namespace either
+    - Still feel like I'd like to avoid these if possible, but I'm sure I'll find the middle ground of useful and confusing
+- Can use multiple `using namespace` calls
+    ```cpp
+        # include <iostream>
+    using namespace std;
+
+    namesapce first { int x = 5; }
+    namesapce second { int x = 6; }
+
+    int main () {
+        using namesapce first;
+        cout << x << second::x;
+    }
+    ```
+- Can use in any `{}` block, not just in a function due to block scoping
+- Namespaces can be aliased via: `namespace new_name = current_name;`
+
+- All standard C++ library entites are contained by `std` namespace
+    - e.g. Can use `std::cout` instead of `using namespace std; cout`
+- Mostly stylistic for namespace but projects mixing libraries tend to prefer explicit qualification
+
+- Storage classes
+- Storing variable for entire duration of program (global or namespace scope), known as static storage
+- Variables with static storage without explicit initialization value are set to zero
+- Variables with automatic storage (block scoped) get undetermined value
+    ```cpp
+    int x; // 0
+    int main () {
+        int y; // Undetermined (e.g 428....)
+    }
+    ```
