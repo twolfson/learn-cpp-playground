@@ -1169,3 +1169,33 @@ https://www.cplusplus.com/doc/tutorial/namespaces/
         int y; // Undetermined (e.g 428....)
     }
     ```
+
+# 2020-09-01
+# Arrays
+https://www.cplusplus.com/doc/tutorial/arrays/
+
+- Array is series of elements (same type) stored in continguous memory location
+- Can reference each element by using adding an index to an identifier
+- e.g. `int foo [5];` is an array of 5 integers
+    - Indicies are base-0 so 0, 1, 2, 3, 4
+- Syntax: `type name [elements];`
+    - `type` is `int`, `float`, etc
+    - `elements` is length of the array. This must be a constant expression
+        - Arrays get their memory at compile time, they're not dynamic in size (at least not built-in version
+
+## Initializing arrays
+- By default, local scope arrays are uninitialized (i.e. values of items are undetermined (soo like other declarations))
+- Use following syntax for specifying initialization values
+    - `int foo [5] = { 16, 2, 77, 40, 12071 };`
+- Can set first `n` values and let defaults become type's default (e.g. zeroes)
+    - `int bar [5] = { 10, 20, 30 };` -- equivalent to `{ 10, 20, 30, 0, 0 };`
+- This also works with no values `{ }; ` would be `{ 0, 0, 0, 0, 0 };`
+
+- C++ allows for assuming element count based on initializer itself
+- To do this, skip specifying the `elements` count in the `[]`
+- `int foo [] = { 16, 2, 77 };` (automatically chooses 3 elements)
+
+- `=` sign is optional for this as well due to supporting "universal initialization"
+- `int foo [] { 16, 2, 77 };`
+
+- Static arrays and those declared in a namespace are always initialized
