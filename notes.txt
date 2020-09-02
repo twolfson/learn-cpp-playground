@@ -1298,3 +1298,9 @@ https://www.cplusplus.com/doc/tutorial/arrays/
     }
     ```
     > Nice, sane `.size()` usage =)
+
+- Looked at `/usr/incude/c++/7/array`
+    - It doesn't have anything classical about it, looks just like a template so everything is done at compile time
+    - Really slick with no overhead I see ._.
+    - Actually, nvm. There's a lot more variables in the data structure...
+    - Containers are just a name given to classes/types that store (e.g. array, queue), https://www.cplusplus.com/reference/stl/
