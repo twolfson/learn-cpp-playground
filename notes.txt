@@ -1304,3 +1304,58 @@ https://www.cplusplus.com/doc/tutorial/arrays/
     - Really slick with no overhead I see ._.
     - Actually, nvm. There's a lot more variables in the data structure...
     - Containers are just a name given to classes/types that store (e.g. array, queue), https://www.cplusplus.com/reference/stl/
+
+# 2020-09-02
+# Strings
+https://www.cplusplus.com/doc/tutorial/ntcs/
+
+- String class/literal can instead be represented by sequence of characters (char array)
+    - e.g. `char foo [20];`
+    - Can store both "Hello" and full 20 character string here
+    - By convnetion, `null` character (`\0`) represents the end of a string
+    - `char foo [20] = { 'H', 'e', 'l', 'l', 'o', '\0' };
+    > So really we have space for 19 characters, no 20?
+
+## Initialization of null-terminated character sequence
+- `char foo [] = { 'H', 'e', 'l', 'l', 'o', '\0' };
+- Uses up 6 elements: 5 characters stated + `null` character at end
+
+- Can also use string literal to define char array
+- Double quotes are the literal constants for this and auto-append `\0` at end of array
+- These are equivalent
+- `char foo [] = { 'H', 'e', 'l', 'l', 'o', '\0' };
+- `char foo [] = "Hello";`
+
+- Due to initialization setup/being an array, cannot overwrite later on
+- The following are all invalid:
+    ```cpp
+    foo = "Bye";
+    foo[] = "Bye";
+    foo = {'B', 'y', 'e', '\0'};
+    ```
+- Instead, need to set values individually (well that's tedious but makes sense, same in any other language from an array perspective)
+    ```cpp
+    myword[0] = 'B';
+    myword[1] = 'y';
+    myword[2] = 'e';
+    myword[3] = '\0';
+    ```
+
+## Strings and null-terminated character sequences
+- Plain arrays with null-terminated tails are typically used in C (known as C-strings)
+- Even in C++, where there's the `string` type, C-Strings are quite normal
+- String literals always produce null-terminated character sequences, not `string` objects
+
+- Both C-string and library strings coexist, most functions support both via overloading
+    - e.g. `cin >> char[]` and `cin >> string` work for both as does `cout`
+
+- One notable difference is C-strings have a fixed size whereas library strings are dynamically sized during runtime
+
+- Can also jump between types easily:
+    ```cpp
+    char my_c_str[] = "some text";
+    string my_string = my_c_str;
+
+    char my_c_str2[] = my_string.c_str();
+    // Betting this is just dynamically sized array so can no optimization here even =/
+    ```
