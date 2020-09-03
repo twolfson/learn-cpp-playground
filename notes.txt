@@ -1419,3 +1419,81 @@ https://www.cplusplus.com/doc/tutorial/pointers/
 > This makes a loooot of sense, I always considered pointers to be 1 type but interesting to know that it's specific to the underlying variable
 
 - Note: * at declaration shouldn't be confused with * for deferencing. Two different things with same symbol
+
+- Example:
+    ```cpp
+    int first_value;
+    int * my_ptr;
+
+    my_ptr = &first_value; // Saves address of first value
+    *my_ptr = 10; // Updates value at pointer location to 10, so effectively `first_value = 10`
+
+    // I feel like while this is possible, it seems like a bad idea...
+    // Like it hides the author's intent =/
+    // Would much rather `first_value = *my_ptr; first_value = 10;`
+    // Oh, I guess that wouldn't quite work...
+    // Damn, still quite confusing though ._.
+    // No wonder why high level languages avoid them
+    ```
+- Another more verbose example...
+
+- Use `int * p1, * p2;` to declare 2 pointers
+- If only 1 gets an asterisk (e.g. `int * p1, p2;`), then 1 is a pointer and the other is the normal type
+
+## Pointers and arrays
+- Array operate like pointers to their first elements and can be implicitly converted to the corresponding pointer
+- e.g. The following is valid:
+    ```cpp
+    int my_array [20];
+    int * my_ptr;
+    my_ptr = my_array;
+    ```
+- Main difference is pointer can be assigned different addresses, whereas array is fixed
+    - `my_array = my_ptr;` is invalid
+
+- Very confusing combined example...
+    - Good example of what not to do in practice imo ._.
+    - This is neat: `ptr = &numbers[2];` - Gets address for third element in array
+
+- Brackets, `[]`, used for getting/setting element of array are known as offset operator (dereferencing operator)
+- Dereferences like * but adds number between brackets
+- The following is equivalent:
+    ```cpp
+    a[5] = 0;
+    *(a+5) = 0;
+    ```
+
+## Pointer initialization
+- Pointers can be initalized at declaration
+    ```cpp
+    int myvar;
+    int * myptr = &myvar;
+    ```
+- This is equivalent to
+    ```cpp
+    int myvar;
+    int * myptr;
+    myptr = &myvar;
+    ```
+- Not
+    ```cpp
+    int myvar;
+    int * myptr;
+    *myptr = &myvar;
+    ```
+- which wouldn't make sense and isn't valid (this is attempting to set `myvar` (`*myptr`) with value of its own address/pointer (`&myvar`) which isn't allowed as a pointer type is required)
+
+- Spaces are optional to `int *myptr;` is also valid
+- Can initialize with an existing pointer value instead of a dereference
+    ```cpp
+    int myvar;
+    int *foo = &myvar;
+    int *bar = foo;
+    ```
+
+Crashing, learned good amount
+Need to also learn that * is for declaration and dereferencing pointers whereas & is for pass-by-reference and getting pointer address (soo referencing/address of)
+Prob get better with practice
+
+Resume at: "Pointer arthimetics"
+https://www.cplusplus.com/doc/tutorial/pointers/
