@@ -1360,3 +1360,62 @@ https://www.cplusplus.com/doc/tutorial/ntcs/
     char my_c_str2[] = my_string.c_str();
     // Betting this is just dynamically sized array so can no optimization here even =/
     ```
+
+# Pointers
+https://www.cplusplus.com/doc/tutorial/pointers/
+
+- Variables have been explained as locations in computer memory, accessed by their identifier/name
+- C++ stores successive blocks in memory, each byte having unique address
+- This means we can access address 1775, 1776, 1777, etc
+
+- When a variable is declared, its value is stored at a given location (memory address)
+- C++ programs usually don't decide exact location, left up to environment (OS)
+    - Program can obtain address if it wants though so it can access relatively positioned data
+
+## Address-of operator (&)
+- Address of a variable cna be obtained via & (address-of operator)
+- e.g. `foo = &myvar;`
+- This assigns address of `myvar` to `foo`
+
+- For purpose of discussion, assume `myvar` gets address of `1776`
+    - Given the following code:
+    ```cpp
+    myvar = 25;
+    foo = &myvar;
+    bar = myvar;
+    ```
+    - We have `myvar` has value 25, `foo` has value `1776` , `bar` has value 25
+- Variable storing address of another variable is called a pointer
+> It's strange we haven't mentioned the type of `foo` yet...
+> Oh, we'll cover declaration later
+
+## Deference operator (*)
+- To access data at address known by a pointer, we use * (deference operator)
+    - Read as "value pointed to by"
+    - e.g. `baz = *foo;`
+- Given example from before where `myvar` is at 1776
+    ```cpp
+    myvar = 25;
+    foo = &myvar; // 1776 (address of myvar)
+    baz = foo; // Also 1776 still
+    baz = *foo; 25 // Value at 1776, which is 25
+    ```
+- Lots of repetition on point, I guess they want to be super clear on this...
+- I think part that always caught me before was the different usages of `*`, `&`, `[]`, `{}`, etc -- lots of C/C++ quirks not found in higher languages
+
+## Declaring pointers
+- A pointer has different properties when pointing to a `char` vs `int` or `float`
+    - I guess they take up more/less size as well as knowing the type they're dereferenced to
+- Declaration of pointers follows syntax
+    - `type * name;`, where `type` is data type being pointed to, and `name` is variable identifier
+- e.g.
+    ```cpp
+    int * num;
+    char * letter;
+    double * decimals;
+    ```
+- Each of these is a pointer, just different types and occupy same space (since size of pointer depends on platform)
+- Data being pointed to though has different size/type
+> This makes a loooot of sense, I always considered pointers to be 1 type but interesting to know that it's specific to the underlying variable
+
+- Note: * at declaration shouldn't be confused with * for deferencing. Two different things with same symbol
