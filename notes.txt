@@ -1340,6 +1340,7 @@ https://www.cplusplus.com/doc/tutorial/ntcs/
     myword[2] = 'e';
     myword[3] = '\0';
     ```
+    > We can however overwrite with `string` types easily which is nice
 
 ## Strings and null-terminated character sequences
 - Plain arrays with null-terminated tails are typically used in C (known as C-strings)
