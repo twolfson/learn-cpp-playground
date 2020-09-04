@@ -1535,3 +1535,72 @@ Resuming https://www.cplusplus.com/doc/tutorial/pointers/
         - Pointer can't move and value can't change
     - They're saying to not worry too much about the mixing here
 - Can also flip `const int * p` and `int const * p` as they're equivalent to non-const pointer to const int (first explanantion)
+
+## Pointers and string literals
+- Can use a pointer on a string literal
+    - `const char* foo = "hello";`
+- We can access characters in sequence via:
+    - `*(foo+4)`
+    - `foo[4]`
+- Refresher for myself: `char []` is syntatic sugar for `char *`
+
+## Pointers to pointers
+- Multiple asterisks indicate multiple levels of indirection/pointers
+    ```cpp
+    char a;
+    char* b;
+    char** c;
+    a = 'z';
+    b = &a;
+    c = &b;
+    ```
+
+## void pointers
+- `void*` is a special type of pointer which point to a value with a lack of a type
+- Thus, these can point to any data type but cannot be directly dereferenced (no type to dereference to)
+
+- Example using `void*` to intake `char*` and `int*` then using `sizeof` for ducktyping
+
+## Invalid pointers and null pointers
+- In principle, pointers point to a valid address
+- In practice, can pooint to invalid element
+
+- `int * p;` is an uninitialized pointer (undetermined value)
+- The following retrieves an element out of bounds
+    ```
+    int myarray[10];
+    int * q = myarray+20;
+    ```
+
+- Neither of these scenarios cause an error
+- It's the dereferencing of said pointers (accessing its value) which can either lead to a runtime error and retrieving a random value
+
+- If want to unset a pointer value, can use null pointer value -- either 0 or `nullptr` keyword
+    ```cpp
+    int * p = 0;
+    int * q = nullptr;
+    ```
+- Both are null pointers and equal (and comparison checks show as such)
+- Sometimes people also use `NULL` (usually defined in standard library headers)
+
+- Note: Null pointers and void pointers are different, null pointer is a placeholder value for "nowhere", and void pointer actually points to a valid address but can't interact with said data
+
+## Pointers ot functions
+- C++ allows pointers to functions
+- Typically used for passing function as an argument to another function
+    > Oooh, like a callback? =D
+
+- Pointers to functions are similar declaration to others but with name in parens with *
+    ```cpp
+    int addition (int a, int b) { return a+b; }
+    int subtraction (int a, int b) { return a-b; }
+    int op (int x, int y, int (*fn)(int, int)) {
+        return (*fn)(x, y);
+    }
+    int main () {
+        int (*minus)(int, int) = subtraction;
+        int m = op(7, 5, addition);
+        int n = op(7, 5, minus);
+    }
+    ```
+    > Interesting that technically addition is a pointer to the function itself
