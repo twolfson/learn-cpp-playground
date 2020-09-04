@@ -1497,3 +1497,41 @@ Prob get better with practice
 
 Resume at: "Pointer arthimetics"
 https://www.cplusplus.com/doc/tutorial/pointers/
+
+# 2020-09-04
+Resuming https://www.cplusplus.com/doc/tutorial/pointers/
+
+## Pointer arthimetics
+- Can only add/subtract on pointers (others make no sense)
+- These behave differently depending on underlying data type size
+
+- If we increment a `char*` (e.g. `++my_ptr;`), then it's 1000 -> 1001
+- For a `short*` (2 bytes), it's 1000 -> 1002
+- For a `long*` (4 bytes), it's 1000 -> 1004
+
+- Explanation around prefix/suffix increment/decrement operators...
+- `*p++` is equivalent to `*(p++)` (should really use parents anyway since this is confusing)
+- Can also do `(*p)++` as well as a bunch of others
+    > Unsure why they're going on this tangent, should be avoided...
+
+## Pointers and const
+- Can make read-only pointers via `const`
+    ```cpp
+    const int* p = &x;
+    x = *p; // Valid (reads value)
+    *p = x; // Invalid (overwrites value)
+    ```
+
+- Common use case of `const` for pointers is parameters in functions
+    `void print_all (const int* start)`
+    - Note: `const` is only applying to the content stored at the address
+    - `const` pointers can still be incremented or assigned different addresses, just not update the contents there
+    > Huh, very interesting...
+
+- There's also support for specifying the value itself is a const
+    - `int * const p3`, const pointer to non-const int
+        - So pointer can't move but the value can change
+    - `const int * const p4`, const pointer to const int
+        - Pointer can't move and value can't change
+    - They're saying to not worry too much about the mixing here
+- Can also flip `const int * p` and `int const * p` as they're equivalent to non-const pointer to const int (first explanantion)
