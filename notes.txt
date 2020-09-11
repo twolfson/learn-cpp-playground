@@ -1640,3 +1640,20 @@ foo = new (nothrow) int [5];
 Interesting that `new` itself is a header, https://www.cplusplus.com/reference/new/
 
 Using exception method is preferred to `nothrow` as it's more efficient (e.g. can try/catch which is only 1 command on success and 2 on failure, vs 2 always)
+
+## Operators delete and delete[]
+To remove a variable after it's done being used, use `delete`
+
+```cpp
+delete pointer; // Used for 1 element
+delete[] pointer; // Used for all elements in array
+
+// e.g.
+int* foo = new int[5];
+delete[] foo;
+```
+
+If `delete` receives a `nullptr`, then it does nothing (nice)
+
+## Dynamic memory in C
+C used `malloc`, `calloc`, `realloc`, and `free`. Those are available via `<cstdlib>` but not compatible with C++'s `new` and `delete`
