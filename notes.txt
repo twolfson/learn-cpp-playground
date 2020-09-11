@@ -1657,3 +1657,52 @@ If `delete` receives a `nullptr`, then it does nothing (nice)
 
 ## Dynamic memory in C
 C used `malloc`, `calloc`, `realloc`, and `free`. Those are available via `<cstdlib>` but not compatible with C++'s `new` and `delete`
+
+# Data structures
+https://www.cplusplus.com/doc/tutorial/structures/
+
+"Data structure" is group of data elements grouped under one name
+Elements are called "members" which can have different types/lengths
+
+```cpp
+struct type_name {
+    member_type1 member_name1;
+    member_type2 member_name2;
+    // etc
+} object_names;
+
+// e.g.
+struct product {
+    int weight;
+    double price;
+};
+
+product apple;
+
+// Can also initialize via `object_names`
+// e.g.
+struct product {
+    int weight;
+    double price;
+} apple;
+```
+
+We can access members via `.` separator (e.g. `apple.weight`, `apple.price`)
+
+Another example given uses `movies_t`, I guess `_t` is for type
+
+Structs can also be passed to functions, just like fundamental types
+
+Another example uses `} films [3];` ending, which implies it can also generate pointers via array syntax without special handling
+(i.e. `films` is an array pointer)
+
+## Pointers to structures
+We can have pointers to structures (e.g. `product* apple_ptr;`)
+
+> It's kind of annoying how they didn't go into detail that the types are butting up against each other in memory =/
+> Feel like that makes the content more intuitive
+
+We can use `->` operator to access members from a pointer (e.g. `apple_ptr->weight` is equivalent to `apple.weight`)
+
+I'm pretty sure this is whitespace insensitive but want to double check
+Exploring in `14-struct`
