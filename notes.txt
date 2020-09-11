@@ -1585,7 +1585,7 @@ Resuming https://www.cplusplus.com/doc/tutorial/pointers/
 
 - Note: Null pointers and void pointers are different, null pointer is a placeholder value for "nowhere", and void pointer actually points to a valid address but can't interact with said data
 
-## Pointers ot functions
+## Pointers to functions
 - C++ allows pointers to functions
 - Typically used for passing function as an argument to another function
     > Oooh, like a callback? =D
@@ -1604,3 +1604,39 @@ Resuming https://www.cplusplus.com/doc/tutorial/pointers/
     }
     ```
     > Interesting that technically addition is a pointer to the function itself
+
+# 2020-09-10
+# Dynamic memory
+https://www.cplusplus.com/doc/tutorial/dynamic/
+
+Going to do less detailed notes once again, always seem to fall into cycle of overly detailed copying =/
+
+- Dynamic memory is allocated by `neww`
+
+```cpp
+pointer = new type;
+pointer = new type [count];
+
+// e.g.
+int* foo = new int[5];
+```
+
+
+Normally `[count]` needs to be a constant expression, with `new`, we can make it dynamic at runtime
+
+This memory comes from the memory heap managed by the system
+By default, if this allocation fails, then we get a `bad_alloc` exception
+Explored in `13-memory-allocation`
+```
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+13-memory-allocation/build-and-run.sh: line 13:  9678 Aborted                 (core dumped) ./main.out
+```
+
+If we use `nothrow`, then it'll return a `nullptr`
+```cpp
+foo = new (nothrow) int [5];
+```
+Interesting that `new` itself is a header, https://www.cplusplus.com/reference/new/
+
+Using exception method is preferred to `nothrow` as it's more efficient (e.g. can try/catch which is only 1 command on success and 2 on failure, vs 2 always)
