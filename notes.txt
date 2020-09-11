@@ -1702,7 +1702,25 @@ We can have pointers to structures (e.g. `product* apple_ptr;`)
 > It's kind of annoying how they didn't go into detail that the types are butting up against each other in memory =/
 > Feel like that makes the content more intuitive
 
-We can use `->` operator to access members from a pointer (e.g. `apple_ptr->weight` is equivalent to `apple.weight`)
+We can use `->` operator to access members from a pointer (e.g. `apple_ptr->weight` is equivalent to `apple.weight` or `(*apple_ptr).weight`)
 
 I'm pretty sure this is whitespace insensitive but want to double check
 Exploring in `14-struct`
+Yep, syntax is whitespace insensitive
+
+## Nesting structures
+Nesting structures is allowed :party:
+
+```cpp
+struct movies_t {
+    string title;
+    int year;
+}
+
+struct friends_t {
+    string name;
+    movies_t favorite_movie;
+}
+```
+
+It's also interesting they use plural with the `_t` syntax, strange
