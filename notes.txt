@@ -1724,3 +1724,141 @@ struct friends_t {
 ```
 
 It's also interesting they use plural with the `_t` syntax, strange
+
+# 2020-09-13
+## Other data types
+https://www.cplusplus.com/doc/tutorial/other_data_types/
+
+## Type aliases (typedef, using)
+We can alias types via `typedef`:
+
+```cpp
+// typedef existing_type new_type_name;
+typedef char my_char;
+typedef char* my_char_ptr;
+
+my_char foo;
+my_char_ptr bar_ptr;
+```
+
+There's also the newer syntax of `using`:
+
+```cpp
+// imo, not as intuitive
+// using new_type_name = existing_type;
+using my_char = char;
+```
+
+`typedef` does have limitations inside of templates, whereas `using` doesn't
+
+
+## Unions
+Unions allow one portion of memory to be accessed as different data types
+> I guess this is as opposed to casting
+> Oddly feels like an anti-pattern unless used for integer truncation or something
+
+Similar structure to `struct`:
+```cpp
+union type_name {
+    member_type1 member_name1;
+    member_type2 member_name2;
+    ...
+} object-names;
+
+union mytypes_t {
+    char c;
+    int i;
+    float f;
+} mytypes;
+mytypes.c; // Access first byte
+mytypes.i; // Access `int` of data
+mytypes.f; // Access `float` of data
+```
+
+The size of the `union` will be as large as its biggest member
+
+This can be used with nesting of a struct, it looks like a mess though ._.
+
+```cppp
+union mix_t {
+    int l;
+    struct {
+        short hi;
+        short lo;
+    } s;
+    char c[4];
+} mix;
+
+mix      // 0 1 2 3 (4 bytes)
+mix.l    // 0-----3 (4 bytes)
+mix.s.hi // 0-1     (2 bytes)
+mix.s.lo //     2-3 (2 bytes)
+mix.c[2] //     2   (1 byte)
+```
+
+## Anonymous unions
+Unions inside of classes or `struct` without a name, leads to their members being directly accessible on their parent
+
+```cpp
+struct {
+    char title[50];
+    union {
+        float dollars;
+        int yen;
+    };
+} book2;
+book2.dollars; // not book2.price.dollars (if union was named `price`)
+book2.yen; // not book2.price.yen (if union was named `price`)
+```
+
+## Enumerated types (enum)
+Enums have syntax:
+
+```cpp
+enum type_name {
+    value1,
+    value2,
+    ...
+} object_names;
+
+enum colors_t {black, blue};
+```
+
+Set value with following expression, oddly no quotes or reference outside of it already knowing the type...
+
+```cpp
+colors_t mycolor;
+mycolor = blue;
+if (mycolor == green) mycolor = red;
+```
+
+Values are implicitly convertible to integer types and vice-versa
+So `black = 0`, `blue = 1`, etc
+
+We can specify values for types, following values will use that value plus 1
+
+```cpp
+enum months_t { jan=1, feb };
+// feb = 2
+```
+
+## Enumerated types with enum class
+C++ allows non-int type enums via `enum class` or `enum struct`:
+
+```cpp
+enum class Colors {black, blue};
+
+Colors mycolor;
+mycolor = Colors::blue;
+if (mycolor == Colors::green) mycolor = Colors::red;
+```
+
+Mmm, that feels much better than juggling multiple enums with no namespace
+I'm a little curious how that works with the CLI but I guess we do that as is in other languages
+Just we can define our "enum" as a fixed array of valid values
+
+Can specify type for `enum class`, thus expanding its size
+
+```cpp
+enum class EyeColor : char {blue, green, brown};
+```
