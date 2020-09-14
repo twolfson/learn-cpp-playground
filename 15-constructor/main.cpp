@@ -5,15 +5,14 @@ using namespace std;
 class Rectangle {
   public:
     int width, height;
-  public:
-    Rectangle (int, int);
+    Rectangle ();
 };
-Rectangle::Rectangle (int a, int b) {
-  width = a;
-  height = b;
+Rectangle::Rectangle () {
+  width = 5;
+  height = 5;
 }
 
 int main (){
-  Rectangle rect_a(3, 4);
+  Rectangle rect_a();
   cout << rect_a.width << endl;
 }

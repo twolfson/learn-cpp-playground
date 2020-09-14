@@ -1969,3 +1969,93 @@ main.cpp:11:1: note: declared private here
 ```
 
 Constructor functions cannot be called explicitly, only run at instance creation
+
+## Overloading constructors
+We can define multiple constructors via overloading
+
+```cpp
+class Rectangle {
+    public:
+        Rectangle ();
+        Rectangle (int, int);
+}
+
+Rectangle::Rectangle () {
+    width = 5;
+    height = 5;
+}
+
+Rectangle::Rectangle (int a, int b) {
+    width = a;
+    height = b;
+}
+
+int main() {
+    Rectangle rect_a;
+    Rectangle rect_b(3, 4);
+}
+```
+
+Parameter-less constructor is called "default constructor"
+If we used parens to invoke, then it's identified as a function definition
+
+```cpp
+Rectangle rect_c();
+// All that's missing is function body, e.g.
+Rectangle get_a_rect() { return foo; }
+```
+
+## Uniform initialization
+Using parens for initialization is called "functional form"
+There's other variants:
+
+```cpp
+Circle foo (10.0); // functional form
+Circle bar = 20.0; // assignment initialization
+Circle baz {30.0}; // uniform initialization
+Circle qux = {30.0}; // POD-like, unclear what that is... possibly covered before
+```
+
+Benefit of uniform initialization is it will never be confused for a function declaration:
+
+```cpp
+Rectangle rect_d{}; // Calls default constructor
+```
+
+## Member initialization in constructors
+We can save values directly to members via the following `:` syntax
+
+```cpp
+Rectangle::Rectangle (int x, int y) : width(x) { height=y; }
+// or
+Rectangle::Rectangle (int x, int y) : width(x), height(y) { }
+```
+
+Doesn't really save much imo... Replacing `=` with parens. Would be better if it was somehow the parameters `int x` itself
+
+There's a discourse about how we must use this syntax if the underlying classes have no other setup
+But I don't quite follow the scenarios...
+I guess I'll get to it when I get to it
+
+Can use `{}` instead of `()` for these constructors:
+
+```cpp
+Rectangle::Rectangle (int x, int y) : width{x}, height{y} { }
+```
+
+## Pointers to classes
+Just like `struct`, we can define pointers to classes (e.g. `Rectangle*`) and use the `->` operator for accesssing member data/methods
+
+The example has neat syntax for an array of classes:
+
+```cpp
+baz = new Rectangle[2] { {2, 5}, {3, 6} };
+```
+
+## Classes defined with struct and union
+Classes can also be defined with `struct` and `union` (instead of `class`)
+
+Generally `struct` is for data structures but it will take member functions
+Key difference is members will be `public` by default
+
+`union` is same as `struct` for all intents and purposes but still shares all data in 1 location
