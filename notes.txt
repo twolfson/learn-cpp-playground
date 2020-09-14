@@ -1862,3 +1862,110 @@ Can specify type for `enum class`, thus expanding its size
 ```cpp
 enum class EyeColor : char {blue, green, brown};
 ```
+
+# Classes (I)
+https://www.cplusplus.com/doc/tutorial/classes/
+
+Classes are an expansion of data structures
+In addition to data members, they have functions
+
+Terminology still `object` for instances
+
+```cpp
+class class_name {
+    access_specifier1:
+        member1;
+    access_specifier2:
+        member2;
+    ...
+} object_names;
+
+// Example
+class Rectangle {
+    int width, height;
+    public:
+        void set_values (int, int); // Order might be confusing
+        int area (void);
+} rect;
+```
+
+Access specifiers can be `private`, `public`, or `protected`. All members after specifiers have limited access rules
+
+- `private` means can only access within other members of the same class "or from their friends"
+- `protected` means can only access from other members of the same class "or from their friends" as well as derived classes
+- `public` means anyone can access as long as they have reference to object
+- Any definitions before an access specifier are `private` by default
+
+> Reminder: These are more for defensive programming/protecting the programmer from themself
+> And maybe doing some security but I believe it shouldn't be relied on
+> Also can be a burden to work against -- I prefer `public` for most items
+
+Public members are accessed via `.` operator:
+
+```cpp
+rect.set_values(3, 4);
+myarea = rect.area();
+```
+
+One way define the full functions outside of the `class` definition via the scope operator, `::`
+
+```cpp
+class Rectangle {
+    public:
+        void set_values (int, int);
+}
+void Rectangle:set_values (int x, int y) {
+    width = x;
+    height = y;
+}
+```
+
+Interesting that there's no reference to `this` or `self`
+Curious how this works with scoping
+
+Another way is to define it in the class itself:
+
+```cpp
+class Rectangle {
+    public:
+        int area () { return width*height; }
+}
+```
+
+In this case, `area` is considered an `inline` member function. The compiler may behave differently as a result
+Well that's a bummer ._.
+
+Example around multiple instances...
+
+## Constructors
+Use the same name of the `class` to define our constructor
+No return type is specified, not even `void`
+
+```cpp
+class Rectangle {
+    public:
+        Rectangle (int, int);
+}
+Rectangle::Rectangle (int a, int b) {
+    width = a;
+    height = b;
+}
+
+int main (){
+    Rectangle rect_a(3, 4);
+}
+```
+
+DONE: What happens if we define a class with a `private` constructor?
+It complains that it's `private`:
+```
+main.cpp: In function ‘int main()’:
+main.cpp:17:24: error: ‘Rectangle::Rectangle(int, int)’ is private within this context
+   Rectangle rect_a(3, 4);
+                        ^
+main.cpp:11:1: note: declared private here
+ Rectangle::Rectangle (int a, int b) {
+ ^~~~~~~~~
+```
+
+Constructor functions cannot be called explicitly, only run at instance creation
