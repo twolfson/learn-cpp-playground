@@ -1611,7 +1611,7 @@ https://www.cplusplus.com/doc/tutorial/dynamic/
 
 Going to do less detailed notes once again, always seem to fall into cycle of overly detailed copying =/
 
-- Dynamic memory is allocated by `neww`
+- Dynamic memory is allocated by `new`
 
 ```cpp
 pointer = new type;
@@ -2141,3 +2141,100 @@ CVector& CVector::operator= (const CVector& param) {
 DONE: Can we use `this->x` for setting parameters?
 Is that a common code style?
 Yes! It works great! =D Unsure how common this is, docs seem to avoid it...
+
+Starting to pass out...
+Going to pause here
+Resume at "Static members" in https://www.cplusplus.com/doc/tutorial/templates/
+
+# 2020-09-14
+Static data members are class-level variables, also accessible at instance-level
+
+```cpp
+class Dummy {
+    public:
+        static int counter;
+}
+int Dummy::n = 0;
+Dummy foo;
+foo.n; // Reads `Dummy::n`
+```
+
+Static members must be initialized outside of the class declaration, this is to avoid re-initialization every call
+
+They have a `new` keyword usage in this example but that's not covered yet. I'm curious when to use it/not
+
+```cpp
+Dummy* dummy_ptr = new Dummy;
+```
+
+Oh, we did cover this before. It's for dynamic elements and requires using a pointer. Right, makes sense
+
+## Const member functions
+Using `const` on a class instance leads to its data members being read-only in the public space
+
+```cpp
+const MyClass foo{10};
+foo.x = 20; // Errors out
+cout << foo.x << endl; // Allowed
+```
+
+Corresponding methods can also only be called if they specify they operate as a `const` as well:
+
+```cpp
+// Inside MyClass definition
+int get() const { return this->x; }
+// whereas the following wounld't work
+int get() { return this->x; }
+```
+
+This is not to be confused with a leading `const` which implies the return value is a `const`
+
+Most functions receive instances as `const` so this means any methods used in functions should also have a `const` on them
+> Well that is tedious, I guess the compiler will complain appropriately
+
+There's also support for non-const overloading of a `const` variant
+
+## Class templates
+Classes support templating like functions:
+
+```cpp
+template <class T>
+class pair {
+    T values [2];
+    public:
+        pair (T first, T second) {
+            values[0] = first;
+            values[1] = second;
+        }
+}
+
+pair<int> int_pair {115, 36};
+```
+
+Functions defined outside of the `class` scope will need to redeclare `template`:
+
+```cpp
+template <class T>
+T mypair<T>::max() {
+    // ...
+}
+```
+
+## Template specialization
+We can tell a template to behave differently for a given type
+This is called template specialization
+
+```cpp
+template <class T>
+class container {
+    T element;
+}
+
+template <> // Empty template call
+class container <char> { // Specify type here
+    char element;
+}
+
+container<int> contained_int {7};
+container<char> contained_char {'j'};
+```
