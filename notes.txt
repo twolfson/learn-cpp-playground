@@ -2407,3 +2407,66 @@ rect.conver(sqr);
 ```
 
 Property of friendship isn't transitive (i.e. friend of friend is not a friend, unless explicitly stated)
+
+## Inheritance between classes
+Inheritance terminology: base class, derived class
+
+Syntax goes:
+
+```cpp
+class derived_class_name: public base_class_name {
+    // ...
+}
+
+// e.g.
+class Polygon {
+    protected:
+        int width, height;
+};
+class Rectangle: public Polygon {
+    public:
+        int area () { return width * height; }
+}
+```
+
+We use `protected` instead of `private` to allow derived classes to access values
+
+The `: public` in our inheritance declaration indicates what level to copy over for inheritance
+e.g. if we did `: protected`, then any previously `public` methods become `protected`
+Similar for `private`
+Curious enough about this that we're exploring in `17-inheritance`
+Yep:
+```
+main.cpp: In function ‘int main()’:
+main.cpp:21:25: error: ‘void Polygon::set_values(int, int)’ is inaccessible within this context
+   rect_a.set_values(5, 2);
+                         ^
+main.cpp:9:10: note: declared here
+     void set_values (int _width, int _height) {
+          ^~~~~~~~~~
+main.cpp:21:25: error: ‘Polygon’ is not an accessible base of ‘Rectangle’
+   rect_a.set_values(5, 2);
+```
+Neat that it also hides parent constructor based on error message
+
+We can omit `: public` and such. The compile will assume `: private` for `class` and `: public` for `struct`
+
+## What is inherited from the base class?
+Publicly derived classes inherit:
+- Constructor/destructor, not a direct inheritance but calls them
+- Assignment operator
+- Friends
+- Private members
+
+Overridden yet using parent constructor inheritance looks like:
+
+```cpp
+Son (int a): Mother (a) { /* Interact with values */ }
+```
+
+## Multiple inheritance
+Multiple inheritance is supposed by using commas:
+
+```cpp
+class Rectangle: public Polygon, public Output;
+```
