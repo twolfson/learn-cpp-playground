@@ -2532,3 +2532,164 @@ virtual int area() =0;
 ```
 
 Abstract base classes can use `this` to access virtual members (so derived class)
+
+# Type conversions
+https://www.cplusplus.com/doc/tutorial/typecasting/
+
+## Implicit conversion
+Implicit conversion is done when switching between compatible types:
+
+```cpp
+short a = 2000;
+int b = a;
+```
+
+Conversion can happen between any numeric types and bool, sometimes even pointer conversion
+
+Converting to a smaller type of the same classification (e.g. int -> char, double -> float) is known as promotion and results in the same value
+
+Conversions between other types can lead to some issues:
+- Negative integer to unsigned type leads to 2's complement bitwise representation
+- Bool is false for zero and nullptr, true otherwise
+- Floats are truncated as ints
+    - If outside of the known range, then it leads to undefined behavior
+- Conversion between same numeric types, value is implementation specific/may not be portable
+
+Some of these types imply precision loss, which compiler can signal with a warning
+This is avoidable via explicit conversion
+
+- Null pointers can be converted to pointers of any time
+- Pointers can be converted to `void` pointers
+- Pointer upcast: Derived class can be converted to unambiguous base class
+
+## Implicit conversions with classes
+We can do implicit conversion with 3 member functions:
+
+- Single-argument constructors
+- Assignment operator
+- Type cast operator
+
+```cpp
+class Base {};
+
+class Derived {
+    public:
+    // Conversion for constructor
+    Derived (const Base& x) {}
+
+    // Conversion for assignment
+    Derived& operator= (const base& x) { return *this; }
+
+    // Conversion via type-casting
+    operator Base() { return Base(); }
+}
+
+int main () {
+    Base foo;
+    Derived bar = foo; // Constructor
+    bar = foo; // Assignment
+    foo = bar; // Type-cast operator
+}
+```
+
+## Keyword explicit
+Ambiguity can be avoided as to what the author's intentions were with the `explicit` keyword
+
+```cpp
+explicit B (const A& x) {}
+```
+
+They didn't quite explain this one great but I feel like it's an edge case I'll bump into like a lot of what's not covered in these tutorials
+
+## Type casting
+There are 2 syntaxes for explicit conversion/type-casting. Both are valid
+
+```cpp
+double x = 10.3;
+int y;
+y = int (x); // functional notation
+y = (int) x; // c-like cast notation
+```
+
+Unrestricted explicit type casting can lead to runtime errors
+
+TO control conversion between classes, there are 4 casting operators:
+
+```cpp
+dynamic_cast <new_type> (expression)
+reinterpret_cast <new_type> (expression)
+static_cast <new_type> (expression)
+const_cast <new_type> (expression)
+```
+
+Each of these would have collapsed to the previously mentioned casts but these have specific characteristics
+
+## dynamic_cast
+Can only be used with pointers, references to classes, or `void*`
+It ensures result of type conversion points to a complete object
+
+This includes upcasting (derived to base) as well as downcasting (base to derived) (if and only if pointed object is valid for destination)
+
+```cpp
+class Base { virtual void dummy() {} };
+class Derived: public Base { int a; };
+
+int main() {
+    Base* base_a_ptr = new Derived;
+    Base* base_b_ptr = new Base;
+    Derived* derived_ptr;
+
+    derived_ptr = dynamic_cast<Derived*>(base_a_ptr);
+    // derived_ptr is not 0/not null
+
+    derived_ptr = dynamic_cast<Derived*>(base_b_ptr);
+    // derived_ptr is 0/null
+    // Doesn't throw an error though
+}
+```
+
+Compatibility note: `dynamic_cast` requires Run-Time Type Information (RTTI) to track dynamic types, some compilers disable this by default
+
+## static_cast
+Convert between points to related classes
+Same as `dynamic_cast` but without safety checks
+e.g. Can get incomplete object when downcasting and thus errors
+
+## reinterpret_cast
+Converts between unrelated classes
+Does a binary copy of the value from 1 pointer to another
+> Wow, super powerful but scary ._.
+
+## const_cast
+Manipulates `const` attribute pointed by a pointer
+e.g. Calling a function lacking `const` on it
+
+```cpp
+void print (char* str) {
+    // ...
+}
+
+int main() {
+    const char* c = "sample text";
+    print( const_cast<char*> (c) );
+}
+```
+
+## typeid
+Checks type of an expression:
+
+```cpp
+typeid (expression)
+
+// Example:
+typeid(a) == typeid(b)
+```
+
+`typeid` returns a reference to the `type_info` constant object
+
+This uses RTTI to track type of dynamic objects
+For polymorphic classes, it uses most derived complete object
+
+String from `type_info` depends on compiler and library
+
+If `typeid` evaluates a dereferenced null pointer, then it will throw a `bad_typeid` exception
