@@ -2362,3 +2362,48 @@ These can be monkey-patched later on it seems though:
 ```cpp
 Rectangle::Rectangle (const Rectangle& other) = default;
 ```
+
+# Friendship and inheritance
+https://www.cplusplus.com/doc/tutorial/inheritance/
+
+## Friend functions
+Friends, defined by `friend` keyword, can access private and protected members of a class
+
+```cpp
+class Rectangle {
+    public:
+        friend Rectangle duplicate (const Rectangle&);
+}
+
+Rectangle bar {2,3};
+Rectangle foo = bar;
+foo.area(); // Can access
+```
+
+## Friend classes
+Similar to friend functions but as classes
+
+```cpp
+class Square;
+
+class Rectangle {
+    int width, height;
+}
+
+class Square {
+    friend class Rectangle;
+    int side;
+}
+
+void Rectangle::convert (Square a) {
+    // Rectangle can access `side` as a friend
+    width = a.side;
+    height = a.side;
+}
+
+Rectangle rect;
+Square sqr {4};
+rect.conver(sqr);
+```
+
+Property of friendship isn't transitive (i.e. friend of friend is not a friend, unless explicitly stated)
