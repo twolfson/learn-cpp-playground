@@ -2693,3 +2693,72 @@ For polymorphic classes, it uses most derived complete object
 String from `type_info` depends on compiler and library
 
 If `typeid` evaluates a dereferenced null pointer, then it will throw a `bad_typeid` exception
+
+# Exceptions
+https://www.cplusplus.com/doc/tutorial/exceptions/
+
+Allow us to try/catch issues in code
+Syntax is `try/throw/catch`
+
+```cpp
+try {
+    throw 20;
+} catch (int exception) {
+    // Interact with exception of `int` type
+}
+```
+
+> Probably a `finally` clause as well
+
+Multiple `catch` are supported (e.g. different types)
+
+
+If `catch (...)` is used, then it will catch any error, regardless of type
+
+## Excepton specification
+Older, now deprecated, code can support dynamic exception specification
+Where it says what type of exception it might throw (e.g. `int` as below)
+
+```cpp
+double myfunction (char param) throw (int);
+```
+
+If function throws unexpected type, then it runs `std::unexpected` instead of looking for a `catch` or calling `std::terminate`
+
+If someone uses `throw()`, then it passes all exceptions to `std::unexpected`
+
+## Standard exceptions
+C++ standard library provides base `exception` class (yep, lowercase -- like `string`)
+
+This can be extended
+The `what` method is virtual and returns a string (more null-terminated char*)
+
+```cpp
+class MyException: public exception {
+    virtual const char* what() const throw () {
+        return "My exception happened"
+    }
+} myex;
+
+throw myex;
+```
+
+If we use `catch (exception& e)`, then it will also catch classes derived from `exception`
+
+All standard library exceptions thrown by C++ components are derived from `exception`:
+- `bad_alloc`, `bad_cast`, etc
+
+They also provide `runtime_error` and `logic_error` for us to use for one-off exceptions
+No example provided but looks like:
+
+```cpp
+throw runtime_error {"Failed to look up X"};
+```
+
+I guess we can try this in a folder, `18-exceptions`
+```
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  Test error
+18-exceptions/build-and-run.sh: line 13: 22589 Aborted                 (core dumped) ./main.out
+```
+Yep, looks like I got it
