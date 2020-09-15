@@ -2899,3 +2899,99 @@ Optional common macros:
 - __STDC_ISO_10646__, relates to date for Unicode standard
 - __STDCPP_STRICT_POINTER_SAFETY, 1 if implementation has strict pointer safety
 - STDCPP_THREAD__, 1 if program allows more than 1 thread
+
+# Input/output with files
+https://www.cplusplus.com/doc/tutorial/files/
+
+We have various stream interfaces for interacting with files (from `<fstream>`):
+
+- `ofstream`, output file stream (write)
+- `ifstream`, input file stream (read)
+- `fstream`, read/write file stream
+
+```cpp
+ofstream myfile;
+myfile.open ("example.txt");
+myfile << "Content";
+myfile.close();
+```
+
+These classes derived from `istream` and `ostream`, where `cin`/`cout` are instances of
+
+## Open a file
+`open (filename, mode)`
+
+Mode is an integer/similar representing multiple flags which can be `|` together:
+
+- `ios::in`, open for input (so like "r")
+- `ios::out`, open for output (so like "w")
+- `ios::binary`, open in binary mode (so like "b", though never fully understood it. Prob makes more sense in C++?
+- `ios::ate`, sets initial position to end of file
+- `ios::app`, output operations behave at end of file, appending to current content (so like "a")
+- `ios::trunc`, if file opened for output and already existed, it's deleted and replaced by new content (truncation)
+
+```cpp
+ofstream myfile;
+myfile.open ("example.bin", ios::out | ios::app | ios::binary);
+```
+
+Default modes for streams:
+- `ofstream`, `ios::out`
+- `ifstream`, `ios::in`
+- `fstream`, `ios::in | ios::out`
+
+When specifying mode, it overwrites the defaults -- not combines with it
+
+Huh, interesting there's no truncation by default
+
+Binary mode performs operations regardless of format, which can have text encoding issues otherwise
+
+`ofstream` constructor supports this syntax as well:
+
+`ofstream myfile {"example.bin", ios::out | ios::app | ios::binary};`
+
+Can use `.is_open()` to verify handle is still open
+
+## Closing a file
+`myfile.close();`
+
+Destructor will also automatically run `.close()`
+
+## Text files
+Example usage with `<<` like `cout`...
+and `>>`/`getline` for `cin`...
+
+## Checking state flags
+Following are for stream state (returning `bool`)
+
+- `bad()`, returns `true` if read/write fails
+    > Sucks doesn't throw an error already ._.
+- `fail()`, returns `true` for `bad()` and when format error occurs
+- `eof()`, `true` when at EOF
+- `good()`, returns `false` when any of before are `true`
+- `clear()`, resets state flags
+
+## get and put stream positioning
+Move the file position around
+
+- `tellg` and `tellp`, outputs `get` and `put` position respectively
+- `seekg` and `seekp`, move to said position
+    - Also allows different direction via `ios::beg`, `ios::cur`, `ios::end`
+
+- `streampos` is the type for the file position
+- `streamoff` is the offset but really an alias to a fundamental integer type
+ (e.g. `long long`)
+
+## Binary files
+For binary files, using `<<`, `>>`, and `getline` is inefficient
+Prefer to use `.write(memblock, size)` and `.read(memblock, size)`
+
+## Buffers and syncrhonization
+File streams are associated with an internal buffer
+When buffer is clushed, data is written to physical medium (if output stream)
+This is called synchronization and runs when:
+
+- File is closed
+- Buffer is full
+- Explicitly via `.flush()` or `endl`
+- Explicitly with `.sync()`, will return `-1` if no associated buffer or failure. Otherwise `0` (success)
