@@ -2762,3 +2762,140 @@ terminate called after throwing an instance of 'std::runtime_error'
 18-exceptions/build-and-run.sh: line 13: 22589 Aborted                 (core dumped) ./main.out
 ```
 Yep, looks like I got it
+
+# Preprocessor directives
+https://www.cplusplus.com/doc/tutorial/preprocessor/
+
+Compile-time replacements, indicated by `#` on each line
+No semicolon for these directives
+They are extended between lines via `\`
+
+## macro definitons (#define, #undef)
+Define a value which is replaced in file:
+```cpp
+#define identifier replacement
+// e.g.
+#define TABLE_SIZE 100;
+int table1[TABLE_SIZE];
+int table2[TABLE_SIZE];
+
+// Post-macro result
+int table1[100];
+int table2[100];
+```
+
+I feel like a scenario like this becomes dead code the compiler abstracts anyway (i.e. if we used `int` instead, it'd see it as dead code/inline-able code)
+
+`#define` can also define full on items like ternaries or function statements
+
+Macros can be undefined by `#undef`
+
+```cpp
+#undef TABLE_SIZE
+```
+
+If macros receive `#` in the replacement sequence, then it uses the following content as string insertion/replacement -- using double quotes too:
+
+```cpp
+#define str(x) #x
+cout << str(test);
+// Equivalent to:
+cout << "test";
+```
+
+`##` concatenates multiple arguments with no blank spaces
+
+```cpp
+#define glue(a,b) a ## b
+glue(c,out) << "test";
+// Equivalent to:
+cout << "test";
+```
+
+Nice warning that complicated macros can lead to less readable code =)
+And no C++ syntax check
+
+## Conditional inclusions
+Using `#ifdef`, `#ifndef`, `#if`, `#endif`, `#else`, and `#elif` for conditionally showing code/not
+
+```cpp
+#ifdef TABLE_SIZE
+int table[TABLE_SIZE];
+#endif
+```
+
+```cpp
+#if TABLE_SIZE>200
+// ...
+#endif
+```
+
+We also have `defined` in preprocessors:
+
+```cpp
+#if defined ARRAY_SIZE
+// Equivalent to
+#ifdef ARRAY_SIZE
+```
+
+## Line control (#line)
+`#line` allows us to override line number and file name for error message
+
+```cpp
+#line number "filename"
+// filename is optional
+
+// e.g.
+#line 20 "assigning variable"
+int a?;
+// Error will have filename "assigning variable" and line 20
+```
+
+## Error directive (#error)
+Abosrts compilation process when found, spits out corresponding error
+
+```cpp
+#ifndef __cplusplus
+#error A C++ compiler is required!
+#endif
+```
+
+## Source file inclusion (#include)
+Injects an entire files contents where `#include` clause is
+
+2 ways to run it:
+- Headers, `#include <header>` (angle brackets)
+- Files, `#include "file"`
+ (double quotes)
+
+Headers are for standard library, files are local files
+The search logic depends on the compiler itself
+If `"file"` isn't found, then it also tries `<file>`
+
+## Pragma directive (#pragma)
+Specifies diverse options to compiler (specific to platform and compiler)
+If compiler doesn't support given `#pragma`, then it's ignored
+
+## Predefined macro names
+Macro names always defined, wrapped in double underscores
+
+- __LINE__, integer for current line
+- __FILE__, filename of current file
+    - Is this the full path or just filename?
+    - Tried in `19-macros`, it's the filename
+    - Their later on example looks like filepath =/ I guess we'll find out over time
+- __DATE__, string literal with "Mmm dd yyyy" format
+- __TIME__, "hh:mm:ss" string literal
+- __cplusplus, Integer value for which C++ version they follow
+    - 199711L, ISO C++ 1998/2003
+    - 201103L, ISO C++ 2011
+    - Not all compilers comform to this
+- __STDC_HOSTED__, 1 if hosted implementation (with all standard headers available), 0 otherwise
+
+Optional common macros:
+- __STDC__, in C, if this is 1, then it conforms to the C standard. In C++, depends on implementation
+- __STDC_VERSION__, more numbers
+- __STDC_MB_MIGHT_NEQ_WC__, relates to multibyte encoding in character literals
+- __STDC_ISO_10646__, relates to date for Unicode standard
+- __STDCPP_STRICT_POINTER_SAFETY, 1 if implementation has strict pointer safety
+- STDCPP_THREAD__, 1 if program allows more than 1 thread
