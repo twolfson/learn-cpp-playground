@@ -2470,3 +2470,65 @@ Multiple inheritance is supposed by using commas:
 ```cpp
 class Rectangle: public Polygon, public Output;
 ```
+
+# Polymorphism
+https://www.cplusplus.com/doc/tutorial/polymorphism/
+
+## Pointers to base class
+Pointers to derived classes are type-compatible with pointers to base classes
+Polymorphism is when we use this feature
+
+```cpp
+Rectangle rect;
+Polygon* poly_rect_ptr = &rect;
+poly_rect_ptr->set_values(4, 5);
+```
+
+Dereferencing would be equivalent to accessing the original derived class:
+
+```cpp
+poly_rect_ptr->set_values(4, 5);
+// Equivalent to:
+(*poly_rect_ptr).set_values(4, 5);
+// Equivalent to:
+rect.set_values(4, 5);
+```
+
+The pointer itself is limited to methods in `Polygon`, it cannot access new methods like `area`
+
+## Virtual members
+A virtual member is a member function that can be redefined in a derived class, while preserving its calling properties via references
+This enables calling derived class methods from polymorphed pointers
+
+This uses the `virtual` keyword:
+
+```cpp
+class Polygon {
+    public:
+        virtual int area () { return 0; }
+}
+class Rectangle: public Polygon {
+    public:
+        int area () { return width * height; }
+}
+
+// Now our polymorphed pointers can call `area` on the derived class
+Rectangle rect;
+Polygon* poly_rect_ptr = &rect;
+poly_rect_ptr->area(); // Calls `Rectangle` version
+```
+
+If we exclude the `virtual` keyword, then the override will still happen but polymorphed pointers would still refer to base class definition, not derived class
+
+The inclusion of `virtual` in our class definition makes it a polymorphic class
+
+## Abstract base classes
+Similar to polymorphic class but is intended to not be used directly
+These functions skip their definition via an `=0` instead of the function body
+Once a class has one of these, it's called an abstract base class
+
+```cpp
+virtual int area() =0;
+```
+
+Abstract base classes can use `this` to access virtual members (so derived class)
