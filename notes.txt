@@ -2238,3 +2238,127 @@ class container <char> { // Specify type here
 container<int> contained_int {7};
 container<char> contained_char {'j'};
 ```
+
+# Special members
+https://www.cplusplus.com/doc/tutorial/classes2/
+
+Special members are implicitly defined but can be overridden:
+
+- Default constructor, `MyClass::MyClass();`
+- Destructor, `MyClass::~MyClass();`
+- Copy constructor, `MyClass::MyClass(const MyClass&);`
+- Copy assignment, `MyClass& operator= (const MyClass&);`
+- Move constructor, `MyClass:::MyClass& (MyClass&&);`
+- Move assignment, `MyClass& operator= (MyClass&&);`
+
+## Default constructor
+Covered at length before
+
+Once we declare any alternative constructos, then default disappears (i.e. parameter-less constructor no longer works)
+
+## Destructor
+Clean up class when being torn down
+
+```cpp
+~MyClass () { delete ptr; }
+```
+
+Destructors aren't provided by default so any members defined must also be torn down
+https://stackoverflow.com/a/4837279
+> Fuck, that sucks ._.
+> Damned no GC =/
+
+## Copy constructor
+Constructor used when its parameter is the same type itself
+This is provided by default which does vanilla copy
+but one might want to pass along an address of a new instance of a member, rather than the same address
+
+```cpp
+class Example5 {
+    string* ptr;
+    public:
+        // Set `ptr` to cloned string with same contents
+        Example5 (const Example5& x) : ptr(new string(x.content())) {}
+}
+
+Example5 foo {"Example"};
+Example5 bar = foo;
+// Same as: Example5 bar {foo};
+```
+
+## Copy assignment
+Similar to copy constructor but runs when assigned to existing type:
+
+```cpp
+Example5 foo {"Example"};
+Example bar; // Normal constructor, no content
+bar = foo; // Copy assignment, not copy constructor
+```
+
+While it looks like assignment, there is no such thing for classes since it's not a fundamental type
+
+Like copy constructor, it's a shallow copy by default
+
+Here's a built-out version, notice how it cleans up the old data
+
+```cpp
+Example5& operator= (const Example5& x) {
+    // These lines can be combined into `*ptr = x.content();` to avoid memory thrashing
+    delete ptr;
+    ptr = new string (x.content());
+
+    return *this;
+}
+```
+
+## Move constructor and assignment
+Move is like copying but move occurs when the source is unnamed/not stored anywhere (e.g. returned from a function, type cast)
+
+```cpp
+MyClass fn() { ... }; // Function returning MyClass object
+MyClass foo = fn(); // Move constructor
+MyClass bar;
+bar = fn(); // Move assignment
+```
+
+These functions have the following syntax, not the `&&` -- indicating "rvalue reference"
+> Or just reference of a reference?
+```cpp
+MyClass (MyClass&&); // Move constructor
+MyClass& operator= (MyClass&&); // Move assignment
+```
+
+The reason we consider copy and move to be distinct is copy has 2 memory sets in the end
+whereas move will only have 1, thus we can reuse the established memory
+Their example uses pattern of assignment then tearing down the old data
+```cpp
+Example6 (Example6&& x) : ptr(x.ptr) {x.ptr=nullptr;}
+Example6& operator= (Example6&& x) {
+    delete ptr;
+    ptr = x.ptr;
+    x.ptr=nullptr;
+    return *this;
+}
+```
+> Fuck that's tedious, using a `delete` call anytime we overwrite a reference... (i.e. `delete ptr; ptr =`)
+> I guess such is the life of memory management =/
+
+Compilers sometimes optimize with "Return Value Optimization" so the move constructor may never get called
+
+## Implicit members
+We can explicitly state which implicit members to keep/remove via `default` and `delete` keywords:
+
+```cpp
+class Rectangle {
+    Rectangle() = default;
+    Rectangle (const Rectangle& other) = delete;
+}
+
+// Any calls to copy constructor would error out
+```
+
+These can be monkey-patched later on it seems though:
+
+```cpp
+Rectangle::Rectangle (const Rectangle& other) = default;
+```
