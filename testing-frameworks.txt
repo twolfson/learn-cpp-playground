@@ -17,3 +17,8 @@ Also, it seems to have the most straightforward docs so I'm compelled to just us
 
 I'll also ask a friend for their opinion but I want to get to writing the language more right now
 Not focusing on best library for X
+
+...
+Their recommendations are:
+- Lint via `clang-format` (I believe I saw another option from Google)
+- Test via "gtest/gmock", pretty sure these are `googletest`
