@@ -7,7 +7,9 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 
 # Build our program
 # DEV: We need to specify `igloo` in our CLI path to allow its `<>` import style
-g++ -I . test.cpp -o test.out
+# DEV: By using `-isystem` instead of `-I`, https://stackoverflow.com/a/1900578
+# TODO: By using `.` as a system dependency, we might be missing out on warnings
+g++ -isystem . test.cpp -o test.out
 
 # Run our program
 # DEV: We could make this optional but meh
