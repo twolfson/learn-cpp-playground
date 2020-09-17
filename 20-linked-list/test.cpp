@@ -1,39 +1,45 @@
 // Load in our dependencies
-#include <igloo/igloo.h>
+#include <igloo/igloo_alt.h>
 using namespace igloo;
 
 // Define our tests
-Describe("A linked list node with 1 element") {
-  Node head_node;
-  void SetUp() {
-    head_node = Node {100};
-  }
+Describe(A_linked_list_node_with_1_element) {
+  Node head_node {100};
+  // Node head_node;
+  // void SetUp() {
+  //   head_node = Node {100};
+  // }
 
-  It("can retrieve its value") {
+  It(can_retrieve_its_value) {
     Assert::That(head_node.value(), Equals(100));
-  }
+  };
 
-  It("has no next node") {
+  It(has_no_next_node) {
     Assert::That(head_node.next(), Equals(NULL));
-  }
-}
+  };
+};
 
-Describe("A linked list node with 2 elements") {
-  Node head_node;
-  Node tail_node;
+Describe(A_linked_list_node_with_2_elements) {
+  Node head_node {100};
+  Node tail_node {200};
   void SetUp() {
-    head_node = Node {100};
-    tail_node = Node {200};
     head_node.set_next(tail_node);
   }
+  // Node head_node;
+  // Node tail_node;
+  // void SetUp() {
+  //   head_node = Node {100};
+  //   tail_node = Node {200};
+  //   head_node.set_next(tail_node);
+  // }
 
-  It("allows retrieving tail node from head node") {
+  It(allows_retrieving_tail_node_from_head_node) {
     Assert::That(head_node.next(), Equals(tail_node));
-  }
+  };
 
   // DEV: We could build out functionality like an iterator across all linked list nodes
   //   e.g. with an actual LinkedList class but this is prob a good enough start, right?
-}
+};
 
 // Run our tests when being run directly
 int main(int argc, /* const */ char *argv[]) {
