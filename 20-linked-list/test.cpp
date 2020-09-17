@@ -1,7 +1,9 @@
 // Load in our dependencies
 #include <igloo/igloo_alt.h> // Provide `Describe` and `It`
+#include "./main.cpp"
 using igloo::Assert;
 using igloo::Equals;
+using playground::Node;
 
 // TODO: Figure out order of operations for declaring a new item for `SetUp()`
 // TODO: Start building out our damn library
@@ -9,8 +11,8 @@ using igloo::Equals;
 // Define our tests
 Describe(A_linked_list_node_with_1_element) {
   int foo;
-  // Node head_node {100};
-  // // Node head_node;
+  Node head_node {100};
+  // Node head_node;
   void SetUp() {
     foo = 50;
     // head_node = Node {100};
