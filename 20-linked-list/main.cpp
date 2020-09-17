@@ -4,16 +4,16 @@ namespace playground {
       int value;
       Node* next;
 
-      Node();
       Node(int _value);
+      Node();
       Node set_next(Node& node);
       // TODO: Build out teardown and other constructors for practice
   };
 
-  Node::Node() {
-    this->value = 0;
-    this->next = nullptr;
-  };
+  // Define our constructor and methods
+  // DEV: We alias `Node::Node()` (required for declaration -- though looking into alternatives)
+  //   https://stackoverflow.com/a/308318
+  Node::Node() : Node::Node(0) {};
   Node::Node(int _value) {
     this->value = _value;
     this->next = nullptr;
