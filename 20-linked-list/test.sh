@@ -6,7 +6,8 @@ set -euo pipefail
 cd "$(dirname ${BASH_SOURCE[0]})"
 
 # Build our program
-g++ test.cpp -o test.out
+# DEV: We need to specify `igloo` in our CLI path to allow its `<>` import style
+g++ -I . test.cpp -o test.out
 
 # Run our program
 # DEV: We could make this optional but meh
