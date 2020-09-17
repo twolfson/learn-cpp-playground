@@ -7,9 +7,16 @@ namespace playground {
       int value;
       Node* next;
 
+      // Provide options for all constructors/assignment
+      Node() = delete;
       Node(int _value);
+      ~Node();
+      Node& operator= (const Node&) = delete;
+      Node(Node&&) = delete;
+      Node& operator= (const Node&&) = delete;
+
+      // Provide our normal methods
       Node* set_next(Node* node_ptr);
-      // TODO: Build out teardown and other constructors for practice
   };
 };
 #endif // __PLAYGROUND__
