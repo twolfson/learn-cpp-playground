@@ -1,14 +1,8 @@
+// Load in our headers
+#include "./main.hpp"
+
+// Define our class
 namespace playground {
-  class Node {
-    public:
-      int value;
-      Node* next;
-
-      Node(int _value);
-      Node* set_next(Node* node_ptr);
-      // TODO: Build out teardown and other constructors for practice
-  };
-
   // Define our constructor and methods
   Node::Node(int _value) {
     this->value = _value;
