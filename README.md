@@ -1,6 +1,24 @@
 # learn-cpp-playground
 A playground environment to learn and explore C++
 
+## Getting started
+To run our repository locally, run the following:
+
+```bash
+# Clone our repository
+git clone https://github.com/twolfson/learn-cpp-playground
+cd learn-cpp-playground
+
+# Install our dependencies
+./install.sh
+
+# Run a folder
+02-variable-declaration/build-and-run.sh
+
+# Note: Some folders are intentionally built to fail
+# This is part of the learning process, seeing how things break
+```
+
 ## Process to date
 - Read through [cplusplus.com's tutorial](https://www.cplusplus.com/doc/tutorial/introduction/) and took notes in
   - Folders 00-19 are based on this
