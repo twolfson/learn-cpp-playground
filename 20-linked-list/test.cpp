@@ -1,5 +1,5 @@
 // Load in our dependencies
-#include <igloo/igloo_alt.h>
+#include <igloo/igloo_alt.h> // Provide `Describe` and `It`
 using igloo::Assert;
 using igloo::Equals;
 
@@ -8,15 +8,17 @@ using igloo::Equals;
 
 // Define our tests
 Describe(A_linked_list_node_with_1_element) {
+  int foo;
   // Node head_node {100};
   // // Node head_node;
-  // // void SetUp() {
-  // //   head_node = Node {100};
-  // // }
+  void SetUp() {
+    foo = 50;
+    // head_node = Node {100};
+  }
 
   It(can_retrieve_its_value) {
     // Assert::That(head_node.value(), Equals(100));
-    Assert::That("a", Equals("bb"));
+    Assert::That(foo, Equals(50));
   };
 
   // It(has_no_next_node) {
