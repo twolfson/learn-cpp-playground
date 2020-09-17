@@ -1,0 +1,19 @@
+# 2020-09-16
+Ah, testing frameworks. Quite the large bikeshed if there ever was one
+
+I'm most happy with testing frameworks that support nesting of contexts (e.g. Mocha, RSpec)
+I can get by in the flat ones (e.g. Python's unittest) but it doesn't feel as powerful/intuitive
+
+A quick Google search pops up a few items:
+- https://github.com/google/googletest
+- https://github.com/catchorg/Catch2
+
+We also saw Codewars used Igloo:
+- https://github.com/codewars/codewars-runner-cli/tree/aeb3c44d46f72d732d3d776d5c299b3ac2f6f6be/frameworks/cpp
+- https://github.com/joakimkarlsson/igloo
+
+While Igloo doesn't seem too recently updated, I'm guessing it's just finalized
+Also, it seems to have the most straightforward docs so I'm compelled to just use it
+
+I'll also ask a friend for their opinion but I want to get to writing the language more right now
+Not focusing on best library for X

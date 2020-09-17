@@ -1,0 +1,7 @@
+# 2020-09-16
+A few a-ha moments from Codewars:
+
+- Using `for (type var : iterator)` as a for loop
+- C++ has built in algorithms like `std::count` which aren't on the `vector` or `array` but are top-level
+    - TODO: Find out the nuances between a `vector` and an `array`
+    - TODO: Find out what makes an iterator an iterator, is it a special method in a `class`?
