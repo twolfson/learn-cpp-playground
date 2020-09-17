@@ -1,6 +1,7 @@
 // Load in our dependencies
 #include <igloo/igloo_alt.h>
-using namespace igloo;
+using igloo::Assert;
+using igloo::Equals;
 
 // TODO: Figure out order of operations for declaring a new item for `SetUp()`
 // TODO: Start building out our damn library
@@ -47,5 +48,5 @@ Describe(A_linked_list_node_with_1_element) {
 
 // Run our tests when being run directly
 int main(int argc, /* const */ char *argv[]) {
-  return TestRunner::RunAllTests(argc, argv);
+  return igloo::TestRunner::RunAllTests(argc, argv);
 }
