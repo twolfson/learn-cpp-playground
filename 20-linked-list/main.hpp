@@ -1,5 +1,5 @@
 #ifndef __PLAYGROUND__
-#define __PLAYGROUND__ 1
+#define __PLAYGROUND__
 
 namespace playground {
   class Node {
