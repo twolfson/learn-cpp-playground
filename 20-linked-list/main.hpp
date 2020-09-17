@@ -2,14 +2,15 @@
 #define __PLAYGROUND__
 
 namespace playground {
+  template <class T>
   class Node {
     public:
-      int value;
+      T value;
       Node* next;
 
       // Provide options for all constructors/assignment
       Node() = delete;
-      Node(int _value);
+      Node(T _value);
       ~Node();
       Node& operator= (const Node&) = delete;
       Node(Node&&) = delete;
