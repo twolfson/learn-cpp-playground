@@ -1,3 +1,6 @@
+// Load in our dependencies
+#include "../vendor/igloo/igloo/igloo.h"
+
 // Intended syntax to leverage for testing
 // TODO: Need to find a test suite to use
 int main() {
