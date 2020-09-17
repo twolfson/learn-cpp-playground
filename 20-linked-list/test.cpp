@@ -10,17 +10,13 @@ using playground::Node;
 
 // Define our tests
 Describe(A_linked_list_node_with_1_element) {
-  int foo;
-  Node head_node {100};
-  // Node head_node;
+  Node head_node;
   void SetUp() {
-    foo = 50;
-    // head_node = Node {100};
+    head_node = Node {100};
   }
 
   It(can_retrieve_its_value) {
-    // Assert::That(head_node.value(), Equals(100));
-    Assert::That(foo, Equals(50));
+    Assert::That(head_node.value, Equals(100));
   };
 
   // It(has_no_next_node) {
