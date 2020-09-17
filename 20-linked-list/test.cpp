@@ -5,9 +5,6 @@ using igloo::Assert;
 using igloo::Equals;
 using playground::Node;
 
-// TODO: Figure out order of operations for declaring a new item for `SetUp()`
-// TODO: Start building out our damn library
-
 // Define our tests
 Describe(A_linked_list_node_with_1_element) {
   Node head_node;
