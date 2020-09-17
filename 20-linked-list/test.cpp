@@ -2,6 +2,9 @@
 #include <igloo/igloo_alt.h>
 using namespace igloo;
 
+// TODO: Figure out order of operations for declaring a new item for `SetUp()`
+// TODO: Start building out our damn library
+
 // Define our tests
 Describe(A_linked_list_node_with_1_element) {
   // Node head_node {100};
