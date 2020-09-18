@@ -16,6 +16,6 @@ Foo<T>::Foo(T _val) {
 }
 
 int main() {
-  Foo<int>* foo_ptr = new Foo<int> {3};
-  cout << foo_ptr->val << endl;
+  Foo<int> foo {3};
+  cout << foo.val << endl;
 }
