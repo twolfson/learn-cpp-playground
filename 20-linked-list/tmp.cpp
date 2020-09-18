@@ -4,12 +4,13 @@ using std::cout;
 using std::endl;
 
 // Define our proof of concept code
+template <typename T>
 class Foo {
   public:
-    int val;
+    T val;
 };
 
 int main() {
-  Foo* foo_ptr = new Foo;
+  Foo<int>* foo_ptr = new Foo<int>;
   cout << foo_ptr->val << endl;
 }
