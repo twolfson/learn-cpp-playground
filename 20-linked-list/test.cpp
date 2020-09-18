@@ -7,9 +7,9 @@ using playground::Node;
 
 // Define our tests
 Describe(A_linked_list_node_with_1_element) {
-  Node* head_node_ptr<int>;
+  Node<int>* head_node_ptr;
   void SetUp() {
-    head_node_ptr = new Node {100};
+    head_node_ptr = new Node<int> {100};
   }
   void TearDown() {
     delete head_node_ptr;
@@ -25,11 +25,11 @@ Describe(A_linked_list_node_with_1_element) {
 };
 
 Describe(A_linked_list_node_with_2_elements) {
-  Node* head_node_ptr<int>;
-  Node* tail_node_ptr<int>;
+  Node<int>* head_node_ptr;
+  Node<int>* tail_node_ptr;
   void SetUp() {
-    head_node_ptr = new Node {100};
-    tail_node_ptr = new Node {200};
+    head_node_ptr = new Node<int> {100};
+    tail_node_ptr = new Node<int> {200};
     head_node_ptr->set_next(tail_node_ptr);
   }
   void TearDown() {

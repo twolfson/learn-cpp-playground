@@ -2,7 +2,7 @@
 #define __PLAYGROUND__
 
 namespace playground {
-  template <class T>
+  template <typename T>
   class Node {
     public:
       T value;
