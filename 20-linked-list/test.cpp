@@ -45,6 +45,13 @@ Describe(A_linked_list_node_with_2_elements) {
   //   e.g. with an actual LinkedList class but this is prob a good enough start, right?
 };
 
+// DEV: This is more a demonstration for ourselves about multiple files loading
+Describe(A_linked_list_node_with_a_custom_element) {
+  It(has_no_issue_with_a_custom_type) {
+
+  }
+}
+
 // Run our tests when being run directly
 int main(int argc, /* const */ char *argv[]) {
   return igloo::TestRunner::RunAllTests(argc, argv);
