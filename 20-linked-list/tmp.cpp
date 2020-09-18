@@ -8,9 +8,14 @@ template <typename T>
 class Foo {
   public:
     T val;
+    Foo (T _val);
 };
+template <typename T>
+Foo<T>::Foo(T _val) {
+  this->val = _val;
+}
 
 int main() {
-  Foo<int>* foo_ptr = new Foo<int>;
+  Foo<int>* foo_ptr = new Foo<int> {3};
   cout << foo_ptr->val << endl;
 }
