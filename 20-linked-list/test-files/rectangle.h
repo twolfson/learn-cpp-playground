@@ -9,10 +9,4 @@ class Rectangle {
     Rectangle(int _width, int _height);
 };
 
-// Implement our class methods
-Rectangle::Rectangle(int _width, int _height) {
-  this->width = _width;
-  this->height = _height;
-}
-
 #endif // __PG_RECTANGLE__

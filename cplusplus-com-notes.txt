@@ -3014,3 +3014,8 @@ https://stackoverflow.com/a/583279
 
 I'm also personally curious of how much time is saved vs maintenance time
 Like writing the code twice for an implementation surely has some overhead cost to it as well =/
+
+https://www.youtube.com/watch?v=QG5s42I_75c
+Watching this video, seems to strike the balance in files
+There are `.cpp` files but they're never `#include` in `main.cpp`
+Maybe they have a build script which loads in the `.cpp` files? Yea, it says all the `.cpp` files`

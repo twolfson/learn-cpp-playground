@@ -1,7 +1,7 @@
 // Load in our dependencies
 #include <igloo/igloo_alt.h> // Provide `Describe` and `It`
-#include "./main.cpp"
-#include "./test-files/square.cpp"
+#include "./main.h"
+#include "./test-files/square.h"
 using igloo::Assert;
 using playground::Node;
 
