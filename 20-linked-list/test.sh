@@ -9,8 +9,10 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 # DEV: We need to specify `igloo` in our CLI path to allow its `<>` import style
 # DEV: By using `-isystem` instead of `-I`, https://stackoverflow.com/a/1900578
 # TODO: By using `.` as a system dependency, we might be missing out on warnings
+# DEV: By splitting up `.cpp` builds, we can use `ccache` and `-c` to cache each compilation
+#   So far: 1s -> 0.1s
 ccache g++ -isystem . -c test.cpp
-ccache g++ -isystem . -c test-files/*.cpp
+ccache g++ -c test-files/*.cpp
 ccache g++ *.o -o test.out
 
 # Run our program
