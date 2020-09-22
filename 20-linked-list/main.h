@@ -19,8 +19,6 @@ namespace playground {
       // Provide our normal methods
       Node* set_next(Node* node_ptr);
   };
-
-  template class Node<int>;
 };
 
 #endif // __PLAYGROUND__

@@ -24,27 +24,27 @@ Describe(A_linked_list_node_with_1_element) {
   };
 };
 
-// Describe(A_linked_list_node_with_2_elements) {
-//   Node<int>* head_node_ptr;
-//   Node<int>* tail_node_ptr;
-//   void SetUp() {
-//     head_node_ptr = new Node<int> {100};
-//     tail_node_ptr = new Node<int> {200};
-//     head_node_ptr->set_next(tail_node_ptr);
-//   }
-//   void TearDown() {
-//     delete head_node_ptr;
-//     delete tail_node_ptr;
-//   }
+Describe(A_linked_list_node_with_2_elements) {
+  Node<int>* head_node_ptr;
+  Node<int>* tail_node_ptr;
+  void SetUp() {
+    head_node_ptr = new Node<int> {100};
+    tail_node_ptr = new Node<int> {200};
+    head_node_ptr->set_next(tail_node_ptr);
+  }
+  void TearDown() {
+    delete head_node_ptr;
+    delete tail_node_ptr;
+  }
 
-//   It(allows_retrieving_tail_node_from_head_node) {
-//     Assert::That(head_node_ptr->next != nullptr);
-//     Assert::That(head_node_ptr->next == tail_node_ptr);
-//   };
+  It(allows_retrieving_tail_node_from_head_node) {
+    Assert::That(head_node_ptr->next != nullptr);
+    Assert::That(head_node_ptr->next == tail_node_ptr);
+  };
 
-//   // DEV: We could build out functionality like an iterator across all linked list nodes
-//   //   e.g. with an actual LinkedList class but this is prob a good enough start, right?
-// };
+  // DEV: We could build out functionality like an iterator across all linked list nodes
+  //   e.g. with an actual LinkedList class but this is prob a good enough start, right?
+};
 
 // // DEV: This is more a demonstration for ourselves about multiple files loading
 // Describe(A_linked_list_node_with_a_custom_element) {

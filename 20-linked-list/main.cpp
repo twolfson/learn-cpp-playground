@@ -20,4 +20,7 @@ namespace playground {
     this->next = node_ptr;
     return node_ptr;
   }
+
+  // Initialize would-be needed variations
+  template class Node<int>;
 }
