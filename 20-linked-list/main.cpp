@@ -1,5 +1,5 @@
 // Load in our headers
-#include "./main.hpp"
+#include "./main.h"
 
 // Define our class and its implementation
 namespace playground {

@@ -2995,3 +2995,22 @@ This is called synchronization and runs when:
 - Buffer is full
 - Explicitly via `.flush()` or `endl`
 - Explicitly with `.sync()`, will return `-1` if no associated buffer or failure. Otherwise `0` (success)
+
+# 2020-09-21
+Revisited header/source file split (i.e. `.h` vs `.cpp`)
+The nuance is certainly annoying and I don't understand how we have such a large recompilation timing issue
+Maybe something about multiple levels of dependencies
+
+Anyway, "the way" is to do interface in `.h` and implementation in `.cpp`
+*but*
+there are exceptions to the rule for:
+- Boost, since it's how they did it
+    - I guess this includes standard library
+- Template usage due to being "only way" (I feel like that's wrong o_O)
+
+https://www.cplusplus.com/articles/Gw6AC542/
+https://stackoverflow.com/a/583271
+https://stackoverflow.com/a/583279
+
+I'm also personally curious of how much time is saved vs maintenance time
+Like writing the code twice for an implementation surely has some overhead cost to it as well =/

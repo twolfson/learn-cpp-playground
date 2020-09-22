@@ -2,7 +2,7 @@
 #define __PG_SQUARE__
 
 // Load in our dependencies
-#include "./rectangle.hpp"
+#include "./rectangle.h"
 
 // Define our square
 class Square : public Rectangle {

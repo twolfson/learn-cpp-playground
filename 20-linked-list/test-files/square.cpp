@@ -1,6 +1,6 @@
 // Load in our dependencies
-#include "./rectangle.hpp"
-#include "./square.hpp"
+#include "./rectangle.h"
+#include "./square.h"
 
 // Implement our class methods
 Square::Square(int side) : Rectangle(side, side) {
