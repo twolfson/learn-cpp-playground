@@ -1,6 +1,6 @@
 // Load in our dependencies
 #include <iostream>
-#include "./main.cpp"
+#include "./main.h"
 using playground::Node;
 using std::cout;
 using std::endl;
