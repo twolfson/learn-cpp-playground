@@ -12,15 +12,13 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 # DEV: By splitting up `.cpp` builds, we can use `ccache` and `-c` to cache each compilation
 #   So far: 1s -> 0.1s
 rm -r build
-shopt -s globstar
-build_cpp () {
-  filepath="$1"
-  mkdir -p "$(dirname "${filepath}")"
-  ccache g++ -isystem . -c "${filepath}" -o build/"${filepath}".o
-}
-build_cpp
-ccache g++ build/**/*.cpp.o -o test.out
-shopt -u globstar
+mkdir -p build
+mkdir -p build/test-files
+ccache g++ -isystem . -c test.cpp -o build/test.cpp.o
+for filepath in test-files/*.cpp; do
+  ccache g++ -c "${filepath}" -o build/"${filepath}".o
+done
+ccache g++ build/*.o build/test-files/*.o -o test.out
 
 # Run our program
 # DEV: We could make this optional but meh
