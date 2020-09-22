@@ -13,10 +13,12 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 #   So far: 1s -> 0.1s
 rm -r build
 shopt -s globstar
-for filepath in $(ls **/*.cpp); do
+build_cpp () {
+  filepath="$1"
   mkdir -p "$(dirname "${filepath}")"
-  ccache g++ -c "${filepath}" -o build/"${filepath}".o
-done
+  ccache g++ -isystem . -c "${filepath}" -o build/"${filepath}".o
+}
+build_cpp
 ccache g++ build/**/*.cpp.o -o test.out
 shopt -u globstar
 
