@@ -3019,3 +3019,7 @@ https://www.youtube.com/watch?v=QG5s42I_75c
 Watching this video, seems to strike the balance in files
 There are `.cpp` files but they're never `#include` in `main.cpp`
 Maybe they have a build script which loads in the `.cpp` files? Yea, it says all the `.cpp` files`
+
+https://github.com/electron/electron/tree/v10.1.2/chromium_src/chrome/browser
+Browsing Electron source
+Sure enough, that's the way to do it. `.h` files are included and `.cc` files are somehow loaded/compiled but never included
