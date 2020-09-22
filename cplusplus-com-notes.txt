@@ -3027,3 +3027,10 @@ Sure enough, that's the way to do it. `.h` files are included and `.cc` files ar
 After a lot of trial/error/understanding, found the answer
 First that we were not crazy: https://latedev.wordpress.com/2014/04/22/common-c-error-messages-2-unresolved-reference/
 Then that it's the template/linker issue was mentioned earlier but not quite obvious, https://bytefreaks.net/programming-2/c/c-undefined-reference-to-templated-class-function
+
+To put what we now understand into words:
+- Split up interface and implementation (i.e. `.h` and `.cpp` respectively)
+    - Exception to rule: If using templates
+        - With unknown classes, colocate implementation in header file
+        - With known classes, use `template class` keyword
+- Load all `.cpp` files in `g++` for linker
