@@ -3023,3 +3023,7 @@ Maybe they have a build script which loads in the `.cpp` files? Yea, it says all
 https://github.com/electron/electron/tree/v10.1.2/chromium_src/chrome/browser
 Browsing Electron source
 Sure enough, that's the way to do it. `.h` files are included and `.cc` files are somehow loaded/compiled but never included
+
+After a lot of trial/error/understanding, found the answer
+First that we were not crazy: https://latedev.wordpress.com/2014/04/22/common-c-error-messages-2-unresolved-reference/
+Then that it's the template/linker issue was mentioned earlier but not quite obvious, https://bytefreaks.net/programming-2/c/c-undefined-reference-to-templated-class-function
