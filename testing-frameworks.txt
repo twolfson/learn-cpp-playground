@@ -37,3 +37,18 @@ Moving onto linters:
 - Even more here https://invisible-island.net/personal/lint-tools.html
 
 Going to try `clang-format` to start
+
+More of a formatter than a linter =/
+Also dislike how pointer `*` is spaced away from important content =/
+
+`cppcheck` is annoyingly quiet =/
+and we can't seem to trigger it
+
+```bash
+cppcheck --language=c++ 20-linked-list/*.h
+cppcheck --language=c++ 20-linked-list/test-files/*.{cpp,h}
+```
+
+It also gives a syntax error for Igloo which is odd
+
+Trying out `clang` now, looots of errors ._.
