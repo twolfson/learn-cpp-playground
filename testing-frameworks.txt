@@ -22,3 +22,18 @@ Not focusing on best library for X
 Their recommendations are:
 - Lint via `clang-format` (I believe I saw another option from Google)
 - Test via "gtest/gmock", pretty sure these are `googletest`
+
+# 2020-09-23
+Igloo was pretty nice
+Very straightforward once we got it up and running
+I'm a little concerned about its debugging messages being not so great but good enough for me for now
+
+Moving onto linters:
+- https://www.reddit.com/r/cpp/comments/5b397d/what_c_linter_do_you_use/
+    - flint, not actively maintained (confirming due to being in `archive` org and having README notice)
+    - clang-tidy, guessing related to `clang-format`
+    - cppcheck
+    - coverity
+- Even more here https://invisible-island.net/personal/lint-tools.html
+
+Going to try `clang-format` to start
