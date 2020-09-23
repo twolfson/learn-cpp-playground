@@ -31,6 +31,7 @@ build_test
 ./test.out
 
 # Rebuild out files with lint errors, utilizing caching
+# DEV: If we we simply tell g++ to compile all files in 1 line, then it won't cache appropriately
 # DEV: `-Wall/extra/pedantic` enable errors
 #   `-Werror` upcasts warnings to errors for exit code
 #   `-fdiagnostics` ensures we get color in our output
