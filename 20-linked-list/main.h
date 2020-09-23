@@ -40,6 +40,6 @@ namespace playground {
     this->next = node_ptr;
     return node_ptr;
   }
-};
+}
 
 #endif // __PLAYGROUND__
