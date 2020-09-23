@@ -11,7 +11,7 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 # TODO: By using `.` as a system dependency, we might be missing out on warnings
 # DEV: By splitting up `.cpp` builds, we can use `ccache` and `-c` to cache each compilation
 #   So far: 1s -> 0.1s
-rm -r build
+rm -r build &> /dev/null || true
 mkdir -p build
 mkdir -p build/test-files
 ccache g++ -isystem . -c test.cpp -o build/test.cpp.o
