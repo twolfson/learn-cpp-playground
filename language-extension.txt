@@ -1,0 +1,18 @@
+# 2020-09-24
+Node.js supports extension via a few means:
+
+https://nodejs.org/api/addons.html
+
+`node-gyp` is for compiling: https://github.com/nodejs/node-gyp
+
+Based on GYP, "Generate Your Projects"
+
+https://gyp.gsrc.io/docs/UserDocumentation.md
+
+Digging around Node.js source code bindings to V8
+Strange to read source code and understand it more intuitively due to syntax comprehension now
+https://github.com/nodejs/node/blob/v14.12.0/src/node_file.h
+
+Python extension seems like Python but a lot more verbose:
+
+https://docs.python.org/3/extending/extending.html

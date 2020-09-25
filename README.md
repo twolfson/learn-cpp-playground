@@ -26,6 +26,7 @@ cd learn-cpp-playground
 - Play around with data structures and multiple files to figure out C++ nuances (e.g. garbage collection, testing, syntax)
   - Used `valgrind` for checking memory leaks, apparently we did well first time o_o
   - Can only find out initial stack size via `RAMEND` which will be tricky for electronics. Not as detailed as I'd like, https://arduino.stackexchange.com/a/65353
+- Read up on Python and Node.js extension via C++
 
 ## Unlicense
 As of Jul 21 2020, Todd Wolfson has released this repository and its contents to the public domain.
